@@ -1,5 +1,6 @@
 package com.example.ghsvi.jsoccercc;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     //public Button click;
     private static Context mContext;
     private static LinearLayout linearLayout;
+    private static ProgressDialog mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,14 @@ public class MainActivity extends AppCompatActivity {
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout1);
         // click = (Button) findViewById(R.id.button);
 
+        mProgressBar = new ProgressDialog(MainActivity.this);
+        mProgressBar.setCancelable(false);
+        mProgressBar.setTitle("Carregando Dados...");
+        mProgressBar.setMessage("Iniciando API");
+        mProgressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        mProgressBar.setMax(100);
+        mProgressBar.setProgress(0);
+        mProgressBar.show();
 
         fetchData process = new fetchData();
         process.execute();
@@ -66,5 +76,9 @@ public class MainActivity extends AppCompatActivity {
 
     public static LinearLayout getLinearLayout() {
         return linearLayout;
+    }
+
+    public static ProgressDialog getmProgressBar() {
+        return mProgressBar;
     }
 }

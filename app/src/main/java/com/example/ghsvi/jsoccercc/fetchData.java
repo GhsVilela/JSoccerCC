@@ -31,7 +31,7 @@ import java.util.ArrayList;
  * Created by ghsvi on 09/12/2017.
  */
 
-public class fetchData extends AsyncTask<Void, Void, Void> {
+public class fetchData extends AsyncTask<Void, String, Void> {
 
     String data = "";
     String dataParsed = "";
@@ -58,9 +58,11 @@ public class fetchData extends AsyncTask<Void, Void, Void> {
             JSONObject jo = new JSONObject(data);
             JSONArray jsonArray = jo.getJSONArray("teams");
 
+            int total = jsonArray.length()-1;
+
             for(int i=0; i<jsonArray.length(); i++)
             {
-
+                Thread.sleep(2000); // 2 segundos
                     /*
                     JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                     singleParsed += "Time: " + jsonObject.get("strTeam") + "\n" +
@@ -90,6 +92,12 @@ public class fetchData extends AsyncTask<Void, Void, Void> {
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                 Estrutura e = new Estrutura(jsonObject.get("strTeam").toString(), jsonObject.get("strStadium").toString(), jsonObject.get("strDescriptionEN").toString(), jsonObject.get("strTeamBadge").toString());
                 lista.add(e);
+
+
+                String m = i % 2 == 0 ? "Organizando Componentes" : "Aguarde!!";
+
+                // exibimos o progresso
+                this.publishProgress(String.valueOf(i), String.valueOf(total), m);
 
             }
 
@@ -123,10 +131,32 @@ public class fetchData extends AsyncTask<Void, Void, Void> {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
         return null;
     }
+
+    @Override
+    protected void onProgressUpdate(String... values) {
+        super.onProgressUpdate(values);
+
+        Float progress = Float.valueOf(values[0]);
+        Float total = Float.valueOf(values[1]);
+
+        String message = values[2];
+
+        MainActivity.getmProgressBar().setProgress((int) ((progress / total) * 100));
+        MainActivity.getmProgressBar().setMessage(message);
+
+        // se os valores são iguais, termianos nosso processamento
+        if (values[0].equals(values[1])) {
+            // removemos a dialog
+            MainActivity.getmProgressBar().cancel();
+        }
+    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
