@@ -1,6 +1,5 @@
 package com.example.ghsvi.jsoccercc;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -8,9 +7,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -31,7 +28,7 @@ import java.util.ArrayList;
  * Created by ghsvi on 09/12/2017.
  */
 
-public class fetchData extends AsyncTask<Void, String, Void> {
+public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
 
     String data = "";
     String dataParsed = "";
@@ -43,7 +40,7 @@ public class fetchData extends AsyncTask<Void, String, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
         try {
-            URL url = new URL("http://www.thesportsdb.com/api/v1/json/1/searchteams.php?t=" + TelaInicialActivity.time.getText());
+            URL url = new URL("http://www.thesportsdb.com/api/v1/json/1/searchteams.php?t=" + InserirPesquisaTimes.time.getText());
 
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             InputStream inputStream = httpURLConnection.getInputStream();
@@ -62,7 +59,7 @@ public class fetchData extends AsyncTask<Void, String, Void> {
 
             for(int i=0; i<jsonArray.length(); i++)
             {
-                Thread.sleep(2000); // 2 segundos
+                Thread.sleep(500); // 2 segundos
                     /*
                     JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                     singleParsed += "Time: " + jsonObject.get("strTeam") + "\n" +
@@ -147,13 +144,13 @@ public class fetchData extends AsyncTask<Void, String, Void> {
 
         String message = values[2];
 
-        MainActivity.getmProgressBar().setProgress((int) ((progress / total) * 100));
-        MainActivity.getmProgressBar().setMessage(message);
+        PesquisaTimes.getmProgressBar().setProgress((int) ((progress / total) * 100));
+        PesquisaTimes.getmProgressBar().setMessage(message);
 
         // se os valores são iguais, termianos nosso processamento
         if (values[0].equals(values[1])) {
             // removemos a dialog
-            MainActivity.getmProgressBar().cancel();
+            PesquisaTimes.getmProgressBar().cancel();
         }
     }
 
@@ -163,42 +160,42 @@ public class fetchData extends AsyncTask<Void, String, Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         String times = "";
-        MainActivity.getLinearLayout().setGravity(Gravity.CENTER);
+        PesquisaTimes.getLinearLayout().setGravity(Gravity.CENTER);
 
         for(int i=0; i<lista.size(); i++)
         {
-            times = "\n\nNome: " + lista.get(i).getStrTeam() + "\n\nEstádio: " + lista.get(i).getStrStadium() + "\n\nDescrição: "  + lista.get(i).getStrDescriptionEN() + "\n";
+            times = "\n\nName: " + lista.get(i).getStrTeam() + "\n\nStadium: " + lista.get(i).getStrStadium() + "\n\nDescription: "  + lista.get(i).getStrDescriptionEN() + "\n";
 
             if(lista.get(i).getStrTeamBadge()=="null")
             {
-                ImageView image = new ImageView(MainActivity.getContext());
+                ImageView image = new ImageView(PesquisaTimes.getContext());
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(250, 250);
                 image.setLayoutParams(lp);
-                Glide.with(MainActivity.getContext())
+                Glide.with(PesquisaTimes.getContext())
                         .load(R.drawable.noimage).override(250,250)
                         .into(image);
-                MainActivity.getLinearLayout().addView(image);
+                PesquisaTimes.getLinearLayout().addView(image);
             }
             else
             {
-                ImageView image = new ImageView(MainActivity.getContext());
+                ImageView image = new ImageView(PesquisaTimes.getContext());
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(250, 250);
                 image.setLayoutParams(lp);
-                Glide.with(MainActivity.getContext())
+                Glide.with(PesquisaTimes.getContext())
                         .load(lista.get(i).getStrTeamBadge()).override(250,250)
                         .into(image);
 
-                MainActivity.getLinearLayout().addView(image);
+                PesquisaTimes.getLinearLayout().addView(image);
             }
 
-            TextView textView = new TextView(MainActivity.getContext());
+            TextView textView = new TextView(PesquisaTimes.getContext());
             textView.setText(times);
             textView.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
-            MainActivity.getLinearLayout().addView(textView);
+            PesquisaTimes.getLinearLayout().addView(textView);
 
 
 
-            //MainActivity.dataText.setText(times);
+            //PesquisaTimes.dataText.setText(times);
 
         }
     }

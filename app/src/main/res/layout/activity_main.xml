@@ -1,21 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.ghsvi.jsoccercc.MainActivity" >
+    tools:context="com.example.ghsvi.jsoccercc.MainActivity"
+    android:id="@+id/drawerLayout">
 
-    <ScrollView
-        android:id="@+id/scrollView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <LinearLayout
-            android:id="@+id/linearLayout1"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-        </LinearLayout>
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            tools:context="com.example.ghsvi.jsoccercc.MainActivity">
 
-    </ScrollView>
-</RelativeLayout>
+            <include
+                layout="@layout/navigation_action"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="100dp"
+                android:text="JSoccerCC
+__________________________
+API Database"
+                android:textColor="#37474F"
+                android:textSize="30sp"
+                android:textAlignment="center"
+                tools:layout_editor_absoluteX="26dp"
+                tools:layout_editor_absoluteY="58dp" />
+
+            <Button
+                android:id="@+id/buttonCapacitor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="55dp"
+                android:text="RSS Feed"
+                android:background="@drawable/border"
+                android:textColor="#37474F"
+                tools:layout_editor_absoluteX="142dp"
+                tools:layout_editor_absoluteY="197dp"
+                android:layout_below="@+id/textView"
+                android:layout_alignLeft="@+id/buttonResistor"
+                android:layout_alignStart="@+id/buttonResistor" />
+
+            <Button
+                android:id="@+id/buttonResistor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/buttonCapacitor"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="29dp"
+                android:background="@drawable/border"
+                android:text="Help"
+                android:textColor="#37474F"
+                tools:layout_editor_absoluteX="148dp"
+                tools:layout_editor_absoluteY="245dp" />
+
+            <Button
+                android:id="@+id/buttonCreditos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/border"
+                android:text="Credits"
+                android:textColor="#37474F"
+                tools:layout_editor_absoluteX="148dp"
+                tools:layout_editor_absoluteY="245dp"
+                android:layout_below="@+id/buttonResistor"
+                android:layout_alignLeft="@+id/buttonResistor"
+                android:layout_alignStart="@+id/buttonResistor" />
+        </RelativeLayout>
+
+    <android.support.design.widget.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:menu="@menu/navigation_menu"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/navigation_header"
+        android:id="@+id/nav_menu">
+        >
+    </android.support.design.widget.NavigationView>
+
+</android.support.v4.widget.DrawerLayout>
+
+
+
+
+
