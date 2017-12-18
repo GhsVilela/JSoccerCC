@@ -23,8 +23,8 @@ public class PesquisaTimes extends AppCompatActivity {
 
         mProgressBar = new ProgressDialog(PesquisaTimes.this);
         mProgressBar.setCancelable(false);
-        mProgressBar.setTitle("Carregando Dados...");
-        mProgressBar.setMessage("Iniciando API");
+        mProgressBar.setTitle("Loading Data...");
+        mProgressBar.setMessage("Initializing API");
         mProgressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         mProgressBar.setMax(100);
         mProgressBar.setProgress(0);

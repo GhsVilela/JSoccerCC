@@ -1,5 +1,8 @@
 package com.example.ghsvi.jsoccercc;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -91,7 +94,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
                 lista.add(e);
 
 
-                String m = i % 2 == 0 ? "Organizando Componentes" : "Aguarde!!";
+                String m = i % 2 == 0 ? "Organizing Components" : "Wait!!";
 
                 // exibimos o progresso
                 this.publishProgress(String.valueOf(i), String.valueOf(total), m);
@@ -155,6 +158,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
     }
 
 
+    @SuppressLint("ResourceAsColor")
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onPostExecute(Void aVoid) {
@@ -188,14 +192,48 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
                 PesquisaTimes.getLinearLayout().addView(image);
             }
 
-            TextView textView = new TextView(PesquisaTimes.getContext());
-            textView.setText(times);
-            textView.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
-            PesquisaTimes.getLinearLayout().addView(textView);
 
+            TextView nome = new TextView(PesquisaTimes.getContext());
+            nome.setText("Name: ");
+            nome.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            nome.setTextSize(20);
+            nome.setTypeface(nome.getTypeface(), Typeface.BOLD);
+            nome.setTextColor(Color.parseColor("#37474F"));
+            PesquisaTimes.getLinearLayout().addView(nome);
 
+            TextView nomeText = new TextView(PesquisaTimes.getContext());
+            nomeText.setText(lista.get(i).getStrTeam());
+            nomeText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            nomeText.setTextColor(Color.parseColor("#37474F"));
+            PesquisaTimes.getLinearLayout().addView(nomeText);
 
-            //PesquisaTimes.dataText.setText(times);
+            TextView estadio = new TextView(PesquisaTimes.getContext());
+            estadio.setText("Stadium: ");
+            estadio.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            estadio.setTextSize(20);
+            estadio.setTypeface(estadio.getTypeface(), Typeface.BOLD);
+            estadio.setTextColor(Color.parseColor("#37474F"));
+            PesquisaTimes.getLinearLayout().addView(estadio);
+
+            TextView estadioText = new TextView(PesquisaTimes.getContext());
+            estadioText.setText(lista.get(i).getStrStadium());
+            estadioText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            estadioText.setTextColor(Color.parseColor("#37474F"));
+            PesquisaTimes.getLinearLayout().addView(estadioText);
+
+            TextView descricao = new TextView(PesquisaTimes.getContext());
+            descricao.setText("Description: ");
+            descricao.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            descricao.setTextSize(20);
+            descricao.setTypeface(descricao.getTypeface(), Typeface.BOLD);
+            descricao.setTextColor(Color.parseColor("#37474F"));
+            PesquisaTimes.getLinearLayout().addView(descricao);
+
+            TextView descricaoText = new TextView(PesquisaTimes.getContext());
+            descricaoText.setText(lista.get(i).getStrDescriptionEN() + "\n");
+            descricaoText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            descricaoText.setTextColor(Color.parseColor("#37474F"));
+            PesquisaTimes.getLinearLayout().addView(descricaoText);
 
         }
     }
