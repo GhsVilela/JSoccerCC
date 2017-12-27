@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/app_bar_main"
+    tools:context="com.example.ghsvi.jsoccercc.MainActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:text="JSoccer Search API"
+        android:textColor="#37474F"
+        android:textSize="30sp"
+        android:textAlignment="center"
+        tools:layout_editor_absoluteX="26dp"
+        tools:layout_editor_absoluteY="58dp" />
+
+    <Button
+        android:id="@+id/buttonRss"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:text="RSS Feed"
+        android:background="@drawable/border"
+        android:textColor="#37474F"
+        tools:layout_editor_absoluteX="142dp"
+        tools:layout_editor_absoluteY="197dp"
+        android:layout_below="@+id/textView"
+        android:layout_alignLeft="@+id/buttonHelp"
+        android:layout_alignStart="@+id/buttonHelp" />
+
+    <Button
+        android:id="@+id/buttonHelp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonRss"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="29dp"
+        android:background="@drawable/border"
+        android:text="Help"
+        android:textColor="#37474F"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="245dp" />
+
+    <Button
+        android:id="@+id/buttonCreditos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/border"
+        android:text="Credits"
+        android:textColor="#37474F"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="245dp"
+        android:layout_below="@+id/buttonHelp"
+        android:layout_alignLeft="@+id/buttonHelp"
+        android:layout_alignStart="@+id/buttonHelp" />
+
+</RelativeLayout>

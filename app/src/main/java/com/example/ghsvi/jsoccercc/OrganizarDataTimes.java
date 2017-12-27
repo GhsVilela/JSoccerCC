@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -39,6 +40,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
     String  urlBrasao = "";
     ArrayList<Estrutura> lista = new ArrayList<>();
     LinearLayout linearLayout;
+    int tam;
 
     @Override
     protected Void doInBackground(Void... voids) {
@@ -57,6 +59,8 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
 
             JSONObject jo = new JSONObject(data);
             JSONArray jsonArray = jo.getJSONArray("teams");
+
+            tam = jsonArray.length();
 
             int total = jsonArray.length()-1;
 
@@ -163,6 +167,22 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
+
+
+        if(tam==0)
+        {
+            PesquisaTimes.getmProgressBar().cancel();
+            Toast.makeText(PesquisaTimes.getContext(), "No results found, please try again using a different name!!", Toast.LENGTH_LONG).show();
+
+            TextView result = new TextView(PesquisaTimes.getContext());
+            result.setText("No results found, please try again using a different name.");
+            result.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            result.setTextSize(20);
+            result.setTextColor(Color.parseColor("#37474F"));
+            PesquisaTimes.getLinearLayout().addView(result);
+        }
+
+
         String times = "";
         PesquisaTimes.getLinearLayout().setGravity(Gravity.CENTER);
 
