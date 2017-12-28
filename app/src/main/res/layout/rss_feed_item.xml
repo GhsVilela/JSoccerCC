@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    card_view:cardBackgroundColor="#d5d5d3"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    card_view:cardCornerRadius="4dp"
+    card_view:cardElevation="5dp"
+    >
+
+    <RelativeLayout
+        android:id="@+id/card_view_relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/item_title"
+            android:layout_alignParentTop="true"
+            android:text="Title"
+            android:textColor="@color/Black"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            />
+
+        <TextView
+            android:id="@+id/item_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/item_title"
+            android:text="Sample Discription"
+            android:textColor="@color/Black"
+            android:textSize="12sp"
+            />
+
+        <TextView
+            android:id="@+id/item_pub_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/item_description"
+            android:text="Date"
+            android:textColor="@color/Black"
+            android:textSize="8sp"
+            android:paddingTop="5dp"
+            />
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

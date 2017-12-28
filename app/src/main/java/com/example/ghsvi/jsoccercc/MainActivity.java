@@ -13,6 +13,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+
+import com.example.ghsvi.jsoccercc.rss.RssActivity;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -21,7 +25,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public  ActionBarDrawerToggle actionBarDrawerToggle;
     public  Toolbar toolbar;
     public  NavigationView mNavigationView;
-    public Handler handler;
+    public  Handler handler;
+    public  Button buttonRss;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mNavigationView = (NavigationView) findViewById(R.id.nav_menu);
         mNavigationView.setNavigationItemSelectedListener(this);
+
+        buttonRss = (Button) findViewById(R.id.buttonRss);
+
+        buttonRss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    Intent launchActivity = new Intent(MainActivity.this, RssActivity.class);
+                    startActivity(launchActivity);
+            }
+        });
     }
 
     @Override
