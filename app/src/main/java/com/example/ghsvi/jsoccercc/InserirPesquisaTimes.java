@@ -137,14 +137,25 @@ public class InserirPesquisaTimes extends AppCompatActivity implements Navigatio
             public void run() {
                 switch (item.getItemId()){
 
-                    case (R.id.search_team):
-                        Intent it = new Intent(InserirPesquisaTimes.this, InserirPesquisaTimes.class);
+                    case(R.id.home):
+                        Intent it = new Intent(InserirPesquisaTimes.this, MainActivity.class);
                         startActivity(it);
                         break;
 
-                    case(R.id.home):
-                        Intent it2 = new Intent(InserirPesquisaTimes.this, MainActivity.class);
+                    case (R.id.search_team):
+                        Intent it2 = new Intent(InserirPesquisaTimes.this, InserirPesquisaTimes.class);
                         startActivity(it2);
+                        break;
+
+                    case (R.id.search_all_players):
+                        Intent it3 = new Intent(InserirPesquisaTimes.this, InserirPesquisaAllJogadores.class);
+                        startActivity(it3);
+                        break;
+
+                    case (R.id.search_player_by_name):
+                        Intent it4 = new Intent(InserirPesquisaTimes.this, InserirPesquisaSingleJogador.class);
+                        startActivity(it4);
+                        break;
                 }
             }
         },400);

@@ -1,7 +1,10 @@
 package com.example.ghsvi.jsoccercc;
 
-
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.design.widget.NavigationView;
@@ -9,34 +12,40 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-import com.example.ghsvi.jsoccercc.rss.RssActivity;
+/**
+ * Created by ghsvi on 29/12/2017.
+ */
 
+public class InserirPesquisaSingleJogador extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-    public  DrawerLayout drawerLayout;
-    public  ActionBarDrawerToggle actionBarDrawerToggle;
-    public  Toolbar toolbar;
-    public  NavigationView mNavigationView;
-    public  Handler handler;
-    public  Button buttonRss;
+    Button pesquisar;
+    static EditText singlePlayer;
+    public DrawerLayout drawerLayout;
+    public ActionBarDrawerToggle actionBarDrawerToggle;
+    public Toolbar toolbar;
+    public NavigationView mNavigationView;
+    public Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.inserir_pesquisa_single_jogador);
+
+        pesquisar = (Button) findViewById(R.id.buttonSinglePlayer);
+        singlePlayer = (EditText) findViewById(R.id.editTextSinglePlayer);
 
         handler = new Handler(Looper.getMainLooper());
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Home");
+        toolbar.setTitle("Search for players");
         setSupportActionBar(toolbar);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -50,15 +59,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mNavigationView = (NavigationView) findViewById(R.id.nav_menu);
         mNavigationView.setNavigationItemSelectedListener(this);
 
-        buttonRss = (Button) findViewById(R.id.buttonRss);
-
-        buttonRss.setOnClickListener(new View.OnClickListener() {
+        pesquisar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    Intent launchActivity = new Intent(MainActivity.this, RssActivity.class);
+                int testConnection = checkConnectivity();
+
+                if(singlePlayer.getText().toString().isEmpty())
+                {
+                    Toast.makeText(getApplicationContext(), "This field can't be empty!!", Toast.LENGTH_LONG).show();
+                }
+
+                else if(testConnection == 1 && !singlePlayer.getText().toString().isEmpty()){
+                    Intent launchActivity = new Intent(InserirPesquisaSingleJogador.this, PesquisaSinglePlayer.class);
                     startActivity(launchActivity);
+
+                }
             }
         });
+
+    }
+
+    private int checkConnectivity() {
+        boolean enabled = true;
+        int internet;
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+
+        if ((info == null || !info.isConnected() || !info.isAvailable())) {
+            internet = 0;//not connected
+            Toast.makeText(getApplicationContext(), "Please connect to the internet first!!", Toast.LENGTH_LONG).show();
+            enabled = false;
+        } else {
+            internet = 1;//connected
+        }
+
+        return internet;
     }
 
     @Override
@@ -105,22 +141,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 switch (item.getItemId()){
 
                     case(R.id.home):
-                        Intent it = new Intent(MainActivity.this, MainActivity.class);
+                        Intent it = new Intent(InserirPesquisaSingleJogador.this, MainActivity.class);
                         startActivity(it);
                         break;
 
                     case (R.id.search_team):
-                        Intent it2 = new Intent(MainActivity.this, InserirPesquisaTimes.class);
+                        Intent it2 = new Intent(InserirPesquisaSingleJogador.this, InserirPesquisaTimes.class);
                         startActivity(it2);
                         break;
 
                     case (R.id.search_all_players):
-                        Intent it3 = new Intent(MainActivity.this, InserirPesquisaAllJogadores.class);
+                        Intent it3 = new Intent(InserirPesquisaSingleJogador.this, InserirPesquisaAllJogadores.class);
                         startActivity(it3);
                         break;
 
                     case (R.id.search_player_by_name):
-                        Intent it4 = new Intent(MainActivity.this, InserirPesquisaSingleJogador.class);
+                        Intent it4 = new Intent(InserirPesquisaSingleJogador.this, InserirPesquisaSingleJogador.class);
                         startActivity(it4);
                         break;
                 }
@@ -132,5 +168,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 }

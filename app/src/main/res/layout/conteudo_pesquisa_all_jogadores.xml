@@ -5,8 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/app_bar_pesquisa_times"
-    tools:context="com.example.ghsvi.jsoccercc.PesquisaTimes">
+    tools:showIn="@layout/app_bar_pesquisa_all_jogadores"
+    tools:context="com.example.ghsvi.jsoccercc.PesquisaAllPlayers">
 
     <ScrollView
         android:id="@+id/scrollView1"
@@ -14,7 +14,7 @@
         android:layout_height="wrap_content" >
 
         <LinearLayout
-            android:id="@+id/linearLayout1"
+            android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"

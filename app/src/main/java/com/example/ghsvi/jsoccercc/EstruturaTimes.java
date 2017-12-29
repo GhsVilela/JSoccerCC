@@ -4,14 +4,14 @@ package com.example.ghsvi.jsoccercc;
  * Created by ghsvi on 11/12/2017.
  */
 
-public class Estrutura {
+public class EstruturaTimes {
 
     private String strTeam;
     private String strStadium;
     private String strDescriptionEN;
     private String strTeamBadge;
 
-    public Estrutura(String strTeam, String strStadium, String strDescriptionEN, String strTeamBadge) {
+    public EstruturaTimes(String strTeam, String strStadium, String strDescriptionEN, String strTeamBadge) {
         this.strTeam = strTeam;
         this.strStadium = strStadium;
         this.strDescriptionEN = strDescriptionEN;

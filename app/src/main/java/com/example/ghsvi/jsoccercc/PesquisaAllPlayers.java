@@ -1,7 +1,9 @@
 package com.example.ghsvi.jsoccercc;
 
-
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.design.widget.NavigationView;
@@ -9,34 +11,35 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
+import android.widget.LinearLayout;
 
-import com.example.ghsvi.jsoccercc.rss.RssActivity;
+/**
+ * Created by ghsvi on 29/12/2017.
+ */
 
+public class PesquisaAllPlayers extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-    public  DrawerLayout drawerLayout;
-    public  ActionBarDrawerToggle actionBarDrawerToggle;
-    public  Toolbar toolbar;
-    public  NavigationView mNavigationView;
-    public  Handler handler;
-    public  Button buttonRss;
+    private static Context mContext;
+    private static LinearLayout linearLayout;
+    private static ProgressDialog mProgressBar;
+    public DrawerLayout drawerLayout;
+    public ActionBarDrawerToggle actionBarDrawerToggle;
+    public Toolbar toolbar;
+    public NavigationView mNavigationView;
+    public Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.pesquisa_all_jogadores);
 
         handler = new Handler(Looper.getMainLooper());
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Home");
+        toolbar.setTitle("Results for " +  InserirPesquisaAllJogadores.allPlayers.getText());
         setSupportActionBar(toolbar);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -50,15 +53,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mNavigationView = (NavigationView) findViewById(R.id.nav_menu);
         mNavigationView.setNavigationItemSelectedListener(this);
 
-        buttonRss = (Button) findViewById(R.id.buttonRss);
 
-        buttonRss.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                    Intent launchActivity = new Intent(MainActivity.this, RssActivity.class);
-                    startActivity(launchActivity);
-            }
-        });
+        mContext = getApplicationContext();
+        linearLayout = (LinearLayout) findViewById(R.id.linearLayout2);
+        // click = (Button) findViewById(R.id.button);
+
+        mProgressBar = new ProgressDialog(PesquisaAllPlayers.this);
+        mProgressBar.setCancelable(false);
+        mProgressBar.setTitle("Loading Data...");
+        mProgressBar.setMessage("Initializing API");
+        mProgressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        mProgressBar.setMax(100);
+        mProgressBar.setProgress(0);
+        mProgressBar.show();
+
+        OrganizarDataAllPlayers process = new OrganizarDataAllPlayers();
+        process.execute();
+
+
+    }
+
+
+    public static Context getContext() {
+        return mContext;
+    }
+
+    public static LinearLayout getLinearLayout() {
+        return linearLayout;
+    }
+
+    public static ProgressDialog getmProgressBar() {
+        return mProgressBar;
     }
 
     @Override
@@ -105,22 +130,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 switch (item.getItemId()){
 
                     case(R.id.home):
-                        Intent it = new Intent(MainActivity.this, MainActivity.class);
+                        Intent it = new Intent(PesquisaAllPlayers.this, MainActivity.class);
                         startActivity(it);
                         break;
 
                     case (R.id.search_team):
-                        Intent it2 = new Intent(MainActivity.this, InserirPesquisaTimes.class);
+                        Intent it2 = new Intent(PesquisaAllPlayers.this, InserirPesquisaTimes.class);
                         startActivity(it2);
                         break;
 
                     case (R.id.search_all_players):
-                        Intent it3 = new Intent(MainActivity.this, InserirPesquisaAllJogadores.class);
+                        Intent it3 = new Intent(PesquisaAllPlayers.this, InserirPesquisaAllJogadores.class);
                         startActivity(it3);
                         break;
 
                     case (R.id.search_player_by_name):
-                        Intent it4 = new Intent(MainActivity.this, InserirPesquisaSingleJogador.class);
+                        Intent it4 = new Intent(PesquisaAllPlayers.this, InserirPesquisaSingleJogador.class);
                         startActivity(it4);
                         break;
                 }
@@ -132,5 +157,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 }

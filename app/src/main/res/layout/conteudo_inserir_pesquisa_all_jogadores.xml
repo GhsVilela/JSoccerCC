@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:id="@+id/linearLayoutInserir"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/app_bar_inserir_pesquisa_all_jogadores"
+    tools:context="com.example.ghsvi.jsoccercc.InserirPesquisaAllJogadores">
+
+    <TextView
+        android:id="@+id/textViewAllPlayers"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="30dp"
+        android:textColor="#37474F"
+        android:text="Type the team you
+want to get all players:"
+        android:textSize="24dp" />
+
+    <EditText
+        android:id="@+id/editTextAllPlayers"
+        android:layout_width="179dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
+        android:ems="10"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/buttonAllPlayers"
+        android:layout_width="185dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:text="OK"
+        android:textColor="#37474F"/>
+
+</LinearLayout>

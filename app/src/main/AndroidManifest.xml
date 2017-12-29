@@ -20,7 +20,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".PesquisaTimes" />
+        <activity android:name=".PesquisaAllPlayers" />
+        <activity android:name=".PesquisaSinglePlayer" />
         <activity android:name=".InserirPesquisaTimes" />
+        <activity android:name=".InserirPesquisaAllJogadores" />
+        <activity android:name=".InserirPesquisaSingleJogador" />
         <activity android:name=".rss.RssActivity"></activity>
     </application>
 

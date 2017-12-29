@@ -3,6 +3,7 @@ package com.example.ghsvi.jsoccercc;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.design.widget.NavigationView;
@@ -10,16 +11,17 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.LinearLayout;
 
-public class PesquisaTimes extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+/**
+ * Created by ghsvi on 29/12/2017.
+ */
 
-    //public Button click;
+public class PesquisaSinglePlayer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+
     private static Context mContext;
     private static LinearLayout linearLayout;
     private static ProgressDialog mProgressBar;
@@ -29,47 +31,41 @@ public class PesquisaTimes extends AppCompatActivity implements NavigationView.O
     public NavigationView mNavigationView;
     public Handler handler;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.pesquisa_times);
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.pesquisa_single_jogador);
 
-        handler = new Handler(Looper.getMainLooper());
+            handler = new Handler(Looper.getMainLooper());
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Results for " +  InserirPesquisaTimes.time.getText());
-        setSupportActionBar(toolbar);
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
+            toolbar.setTitle("Results for " +  InserirPesquisaSingleJogador.singlePlayer.getText());
+            setSupportActionBar(toolbar);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
+            drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+            actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
 
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
+            drawerLayout.addDrawerListener(actionBarDrawerToggle);
+            actionBarDrawerToggle.syncState();
 
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        mNavigationView = (NavigationView) findViewById(R.id.nav_menu);
-        mNavigationView.setNavigationItemSelectedListener(this);
+            mNavigationView = (NavigationView) findViewById(R.id.nav_menu);
+            mNavigationView.setNavigationItemSelectedListener(this);
 
 
-        mContext = getApplicationContext();
-        linearLayout = (LinearLayout) findViewById(R.id.linearLayout1);
-        // click = (Button) findViewById(R.id.button);
+            mContext = getApplicationContext();
+            linearLayout = (LinearLayout) findViewById(R.id.linearLayout3);
 
-        mProgressBar = new ProgressDialog(PesquisaTimes.this);
-        mProgressBar.setCancelable(false);
-        mProgressBar.setTitle("Loading Data...");
-        mProgressBar.setMessage("Initializing API");
-        mProgressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        mProgressBar.setMax(100);
-        mProgressBar.setProgress(0);
-        mProgressBar.show();
+            mProgressBar = new ProgressDialog(PesquisaSinglePlayer.this);
+            mProgressBar.setCancelable(false);
+            mProgressBar.setTitle("Loading Data...");
+            mProgressBar.setMessage("Initializing API");
+            mProgressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            mProgressBar.setMax(100);
+            mProgressBar.setProgress(0);
+            mProgressBar.show();
 
-        OrganizarDataTimes process = new OrganizarDataTimes();
-        process.execute();
-
-
-    }
+            OrganizarDataSinglePlayer process = new OrganizarDataSinglePlayer();
+            process.execute();
+        }
 
     public static Context getContext() {
         return mContext;
@@ -127,22 +123,22 @@ public class PesquisaTimes extends AppCompatActivity implements NavigationView.O
                 switch (item.getItemId()){
 
                     case(R.id.home):
-                        Intent it = new Intent(PesquisaTimes.this, MainActivity.class);
+                        Intent it = new Intent(PesquisaSinglePlayer.this, MainActivity.class);
                         startActivity(it);
                         break;
 
                     case (R.id.search_team):
-                        Intent it2 = new Intent(PesquisaTimes.this, InserirPesquisaTimes.class);
+                        Intent it2 = new Intent(PesquisaSinglePlayer.this, InserirPesquisaTimes.class);
                         startActivity(it2);
                         break;
 
                     case (R.id.search_all_players):
-                        Intent it3 = new Intent(PesquisaTimes.this, InserirPesquisaAllJogadores.class);
+                        Intent it3 = new Intent(PesquisaSinglePlayer.this, InserirPesquisaAllJogadores.class);
                         startActivity(it3);
                         break;
 
                     case (R.id.search_player_by_name):
-                        Intent it4 = new Intent(PesquisaTimes.this, InserirPesquisaSingleJogador.class);
+                        Intent it4 = new Intent(PesquisaSinglePlayer.this, InserirPesquisaSingleJogador.class);
                         startActivity(it4);
                         break;
                 }

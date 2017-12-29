@@ -6,8 +6,10 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -38,7 +40,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
     String dataParsed = "";
     String singleParsed = "";
     String  urlBrasao = "";
-    ArrayList<Estrutura> lista = new ArrayList<>();
+    ArrayList<EstruturaTimes> lista = new ArrayList<>();
     LinearLayout linearLayout;
     int tam;
 
@@ -94,7 +96,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
 
 
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-                Estrutura e = new Estrutura(jsonObject.get("strTeam").toString(), jsonObject.get("strStadium").toString(), jsonObject.get("strDescriptionEN").toString(), jsonObject.get("strTeamBadge").toString());
+                EstruturaTimes e = new EstruturaTimes(jsonObject.get("strTeam").toString(), jsonObject.get("strStadium").toString(), jsonObject.get("strDescriptionEN").toString(), jsonObject.get("strTeamBadge").toString());
                 lista.add(e);
 
 
@@ -181,6 +183,13 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             result.setTextColor(Color.parseColor("#37474F"));
             PesquisaTimes.getLinearLayout().addView(result);
         }
+        else
+        {
+            if(tam==1)
+                Toast.makeText(PesquisaTimes.getContext(), tam + " Result found for " + InserirPesquisaTimes.time.getText(), Toast.LENGTH_LONG).show();
+            else
+                Toast.makeText(PesquisaTimes.getContext(), tam + " Results found for " + InserirPesquisaTimes.time.getText(), Toast.LENGTH_LONG).show();
+        }
 
 
         String times = "";
@@ -192,6 +201,10 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
 
             if(lista.get(i).getStrTeamBadge()=="null")
             {
+                TextView space = new TextView(PesquisaTimes.getContext());
+                space.setText("\n");
+                PesquisaTimes.getLinearLayout().addView(space);
+
                 ImageView image = new ImageView(PesquisaTimes.getContext());
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(250, 250);
                 image.setLayoutParams(lp);
@@ -202,16 +215,20 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             }
             else
             {
+                TextView space = new TextView(PesquisaTimes.getContext());
+                space.setText("\n");
+                PesquisaTimes.getLinearLayout().addView(space);
+
                 ImageView image = new ImageView(PesquisaTimes.getContext());
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(250, 250);
                 image.setLayoutParams(lp);
                 Glide.with(PesquisaTimes.getContext())
                         .load(lista.get(i).getStrTeamBadge()).override(250,250)
                         .into(image);
-
                 PesquisaTimes.getLinearLayout().addView(image);
             }
 
+            LinearLayout.LayoutParams lpView = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 2);
 
             TextView nome = new TextView(PesquisaTimes.getContext());
             nome.setText("Name: ");
@@ -227,6 +244,12 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             nomeText.setTextColor(Color.parseColor("#37474F"));
             PesquisaTimes.getLinearLayout().addView(nomeText);
 
+            View view = new View(PesquisaTimes.getContext());
+            view.setLayoutParams(lpView);
+            view.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.DarkGray));
+
+            PesquisaTimes.getLinearLayout().addView(view);
+
             TextView estadio = new TextView(PesquisaTimes.getContext());
             estadio.setText("Stadium: ");
             estadio.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
@@ -236,10 +259,25 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             PesquisaTimes.getLinearLayout().addView(estadio);
 
             TextView estadioText = new TextView(PesquisaTimes.getContext());
-            estadioText.setText(lista.get(i).getStrStadium());
+
+            if(lista.get(i).getStrStadium().isEmpty())
+            {
+                estadioText.setText("Stadium not available");
+            }
+            else
+            {
+                estadioText.setText(lista.get(i).getStrStadium());
+            }
+
             estadioText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             estadioText.setTextColor(Color.parseColor("#37474F"));
             PesquisaTimes.getLinearLayout().addView(estadioText);
+
+            View view2 = new View(PesquisaTimes.getContext());
+            view2.setLayoutParams(lpView);
+            view2.setBackgroundColor(ContextCompat.getColor(view2.getContext(), R.color.DarkGray));
+
+            PesquisaTimes.getLinearLayout().addView(view2);
 
             TextView descricao = new TextView(PesquisaTimes.getContext());
             descricao.setText("Description: ");
@@ -250,11 +288,24 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             PesquisaTimes.getLinearLayout().addView(descricao);
 
             TextView descricaoText = new TextView(PesquisaTimes.getContext());
-            descricaoText.setText(lista.get(i).getStrDescriptionEN() + "\n");
+            if(lista.get(i).getStrDescriptionEN()=="null")
+            {
+                descricaoText.setText("Description not available");
+            }
+            else
+            {
+                descricaoText.setText(lista.get(i).getStrDescriptionEN());
+            }
+
             descricaoText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             descricaoText.setTextColor(Color.parseColor("#37474F"));
             PesquisaTimes.getLinearLayout().addView(descricaoText);
 
+            View view3 = new View(PesquisaTimes.getContext());
+            view3.setLayoutParams(lpView);
+            view3.setBackgroundColor(ContextCompat.getColor(view3.getContext(), R.color.DarkGray));
+
+            PesquisaTimes.getLinearLayout().addView(view3);
         }
     }
 
