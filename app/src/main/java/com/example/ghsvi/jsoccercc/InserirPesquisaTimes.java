@@ -7,12 +7,14 @@ import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +22,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.Socket;
+import java.net.URL;
+import java.net.URLConnection;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class InserirPesquisaTimes extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -59,18 +74,18 @@ public class InserirPesquisaTimes extends AppCompatActivity implements Navigatio
         pesquisar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 int testConnection = checkConnectivity();
 
-                if(time.getText().toString().isEmpty())
-                {
-                    Toast.makeText(getApplicationContext(), "This field can't be empty!!", Toast.LENGTH_LONG).show();
-                }
+                    if(time.getText().toString().isEmpty())
+                    {
+                        Toast.makeText(getApplicationContext(), "This field can't be empty!!", Toast.LENGTH_LONG).show();
+                    }
 
-                else if(testConnection == 1 && !time.getText().toString().isEmpty()){
-                    Intent launchActivity = new Intent(InserirPesquisaTimes.this, PesquisaTimes.class);
-                    startActivity(launchActivity);
-
-                }
+                    else if(testConnection == 1 && !time.getText().toString().isEmpty()){
+                        Intent launchActivity = new Intent(InserirPesquisaTimes.this, PesquisaTimes.class);
+                        startActivity(launchActivity);
+                    }
             }
         });
 

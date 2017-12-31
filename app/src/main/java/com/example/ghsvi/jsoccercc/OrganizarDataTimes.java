@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.View;
@@ -30,6 +31,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 /**
  * Created by ghsvi on 09/12/2017.
  */
@@ -47,89 +52,54 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
         try {
-            URL url = new URL("http://www.thesportsdb.com/api/v1/json/1/searchteams.php?t=" + InserirPesquisaTimes.time.getText());
 
-            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            InputStream inputStream = httpURLConnection.getInputStream();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            String line = "";
-            while(line!=null)
-            {
-                line = bufferedReader.readLine();
-                data = data + line;
-            }
+                OkHttpClient client = new OkHttpClient();
 
-            JSONObject jo = new JSONObject(data);
-            JSONArray jsonArray = jo.getJSONArray("teams");
+                Request request = new Request.Builder()
+                        .url("http://www.thesportsdb.com/api/v1/json/1/searchteams.php?t=" + InserirPesquisaTimes.time.getText())
+                        .build();
 
-            tam = jsonArray.length();
+                Response response = client.newCall(request).execute();
+                data = response.body().string();
 
-            int total = jsonArray.length()-1;
+                /*
 
-            for(int i=0; i<jsonArray.length(); i++)
-            {
-                Thread.sleep(500); // 2 segundos
-                    /*
+                URL url = new URL("http://www.thesportsdb.com/api/v1/json/1/searchteams.php?t=" + InserirPesquisaTimes.time.getText());
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+
+                String line = "";
+
+                while(line!=null)
+                {
+                    line = bufferedReader.readLine();
+                    data = data + line;
+                }
+                */
+
+                JSONObject jo = new JSONObject(data);
+                JSONArray jsonArray = jo.getJSONArray("teams");
+
+                tam = jsonArray.length();
+
+                int total = jsonArray.length()-1;
+
+                for(int i=0; i<jsonArray.length(); i++)
+                {
+                    Thread.sleep(500); // 2 segundos
+
                     JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-                    singleParsed += "Time: " + jsonObject.get("strTeam") + "\n" +
-                            "Liga: " + jsonObject.get("strLeague") + "\n" +
-                            "Técnico: " + jsonObject.get("strManager") + "\n" +
-                            "Estádio: " + jsonObject.get("strStadium") + "\n" +
-                            "Capacidade Estádio: " + jsonObject.get("intStadiumCapacity") + "\n" +
-                            "WebSite: " + jsonObject.get("strWebsite") + "\n" +
-                            "Facebook: " + jsonObject.get("strFacebook") + "\n" +
-                            "Twitter: " + jsonObject.get("strTwitter") + "\n" +
-                            "Descrição: " + jsonObject.get("strDescriptionEN") + "\n" +
-                            "Badge: " + jsonObject.get("strTeamBadge");
+                    EstruturaTimes e = new EstruturaTimes(jsonObject.get("strTeam").toString(), jsonObject.get("strStadium").toString(), jsonObject.get("strDescriptionEN").toString(), jsonObject.get("strTeamBadge").toString());
+                    lista.add(e);
 
+                    String m = i % 2 == 0 ? "Organizing Components" : "Wait!!";
 
+                    // exibimos o progresso
+                    this.publishProgress(String.valueOf(i), String.valueOf(total), m);
 
-
-
-
-
-
-                    dataParsed = dataParsed + singleParsed + "\n";
-
-                    urlBrasao = jsonObject.getString("strTeamBadge");
-                    */
-
-
-                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-                EstruturaTimes e = new EstruturaTimes(jsonObject.get("strTeam").toString(), jsonObject.get("strStadium").toString(), jsonObject.get("strDescriptionEN").toString(), jsonObject.get("strTeamBadge").toString());
-                lista.add(e);
-
-
-                String m = i % 2 == 0 ? "Organizing Components" : "Wait!!";
-
-                // exibimos o progresso
-                this.publishProgress(String.valueOf(i), String.valueOf(total), m);
-
-            }
-
-
-
-            /*
-
-
-
-            JSONArray jsonArray = new JSONArray(data);
-
-            for(int i=0; i<jsonArray.length(); i++)
-            {
-                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-                singleParsed = "Time: " + jsonObject.get("strTeam") + "\n" +
-                               "Liga: " + jsonObject.get("strLeague") + "\n" +
-                               "Técnico: " + jsonObject.get("strManager") + "\n" +
-                               "Estádio: " + jsonObject.get("strStadium") + "\n";
-
-                dataParsed = dataParsed + singleParsed + "\n";
-
-
-
-            }
-             */
-           // 
+                }
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -156,7 +126,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
         PesquisaTimes.getmProgressBar().setProgress((int) ((progress / total) * 100));
         PesquisaTimes.getmProgressBar().setMessage(message);
 
-        // se os valores são iguais, termianos nosso processamento
+        // se os valores são iguais, terminanos nosso processamento
         if (values[0].equals(values[1])) {
             // removemos a dialog
             PesquisaTimes.getmProgressBar().cancel();
@@ -170,11 +140,24 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
 
-
-        if(tam==0)
+        if(data.isEmpty())
         {
             PesquisaTimes.getmProgressBar().cancel();
-            Toast.makeText(PesquisaTimes.getContext(), "No results found, please try again using a different name!!", Toast.LENGTH_LONG).show();
+            Snackbar.make(PesquisaTimes.getLinearLayout(), "API is Offline, try again later!!", Snackbar.LENGTH_LONG).show();
+
+            TextView result = new TextView(PesquisaTimes.getContext());
+            result.setText("API is Offline, try again later.");
+            result.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            result.setTextSize(20);
+            result.setTextColor(Color.parseColor("#37474F"));
+            PesquisaTimes.getLinearLayout().addView(result);
+
+        }
+
+        if(tam==0 && !data.isEmpty())
+        {
+            PesquisaTimes.getmProgressBar().cancel();
+            Snackbar.make(PesquisaTimes.getLinearLayout(), "No results found, please try again using a different name!!", Snackbar.LENGTH_LONG).show();
 
             TextView result = new TextView(PesquisaTimes.getContext());
             result.setText("No results found, please try again using a different name.");
@@ -183,7 +166,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             result.setTextColor(Color.parseColor("#37474F"));
             PesquisaTimes.getLinearLayout().addView(result);
         }
-        else
+        else if(tam!=0 && !data.isEmpty())
         {
             if(tam==1)
                 Toast.makeText(PesquisaTimes.getContext(), tam + " Result found for " + InserirPesquisaTimes.time.getText(), Toast.LENGTH_LONG).show();
