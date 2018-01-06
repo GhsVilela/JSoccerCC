@@ -1,8 +1,12 @@
 package com.example.ghsvi.jsoccercc;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -42,9 +46,6 @@ import okhttp3.Response;
 public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
 
     String data = "";
-    String dataParsed = "";
-    String singleParsed = "";
-    String  urlBrasao = "";
     ArrayList<EstruturaTimes> lista = new ArrayList<>();
     LinearLayout linearLayout;
     int tam;
@@ -62,23 +63,6 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
                 Response response = client.newCall(request).execute();
                 data = response.body().string();
 
-                /*
-
-                URL url = new URL("http://www.thesportsdb.com/api/v1/json/1/searchteams.php?t=" + InserirPesquisaTimes.time.getText());
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-
-                String line = "";
-
-                while(line!=null)
-                {
-                    line = bufferedReader.readLine();
-                    data = data + line;
-                }
-                */
-
                 JSONObject jo = new JSONObject(data);
                 JSONArray jsonArray = jo.getJSONArray("teams");
 
@@ -91,7 +75,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
                     Thread.sleep(500); // 2 segundos
 
                     JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-                    EstruturaTimes e = new EstruturaTimes(jsonObject.get("strTeam").toString(), jsonObject.get("strStadium").toString(), jsonObject.get("strDescriptionEN").toString(), jsonObject.get("strTeamBadge").toString());
+                    EstruturaTimes e = new EstruturaTimes(jsonObject.get("strTeam").toString(), jsonObject.get("strStadium").toString(), jsonObject.get("strDescriptionEN").toString(), jsonObject.get("strTeamBadge").toString(), jsonObject.get("strFacebook").toString(), jsonObject.get("strLeague").toString(), jsonObject.get("intFormedYear").toString(), jsonObject.get("strManager").toString());
                     lista.add(e);
 
                     String m = i % 2 == 0 ? "Organizing Components" : "Wait!!";
@@ -153,51 +137,33 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             PesquisaTimes.getLinearLayout().addView(result);
 
         }
-
-        if(tam==0 && !data.isEmpty())
+        else
         {
-            PesquisaTimes.getmProgressBar().cancel();
-            Snackbar.make(PesquisaTimes.getLinearLayout(), "No results found, please try again using a different name!!", Snackbar.LENGTH_LONG).show();
-
-            TextView result = new TextView(PesquisaTimes.getContext());
-            result.setText("No results found, please try again using a different name.");
-            result.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
-            result.setTextSize(20);
-            result.setTextColor(Color.parseColor("#37474F"));
-            PesquisaTimes.getLinearLayout().addView(result);
-        }
-        else if(tam!=0 && !data.isEmpty())
-        {
-            if(tam==1)
-                Toast.makeText(PesquisaTimes.getContext(), tam + " Result found for " + InserirPesquisaTimes.time.getText(), Toast.LENGTH_LONG).show();
-            else
-                Toast.makeText(PesquisaTimes.getContext(), tam + " Results found for " + InserirPesquisaTimes.time.getText(), Toast.LENGTH_LONG).show();
-        }
-
-
-        String times = "";
-        PesquisaTimes.getLinearLayout().setGravity(Gravity.CENTER);
-
-        for(int i=0; i<lista.size(); i++)
-        {
-            times = "\n\nName: " + lista.get(i).getStrTeam() + "\n\nStadium: " + lista.get(i).getStrStadium() + "\n\nDescription: "  + lista.get(i).getStrDescriptionEN() + "\n";
-
-            if(lista.get(i).getStrTeamBadge()=="null")
+            if(tam==0)
             {
-                TextView space = new TextView(PesquisaTimes.getContext());
-                space.setText("\n");
-                PesquisaTimes.getLinearLayout().addView(space);
+                PesquisaTimes.getmProgressBar().cancel();
+                Snackbar.make(PesquisaTimes.getLinearLayout(), "No results found, please try again using a different name!!", Snackbar.LENGTH_LONG).show();
 
-                ImageView image = new ImageView(PesquisaTimes.getContext());
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(250, 250);
-                image.setLayoutParams(lp);
-                Glide.with(PesquisaTimes.getContext())
-                        .load(R.drawable.noimage).override(250,250)
-                        .into(image);
-                PesquisaTimes.getLinearLayout().addView(image);
+                TextView result = new TextView(PesquisaTimes.getContext());
+                result.setText("No results found, please try again using a different name.");
+                result.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+                result.setTextSize(20);
+                result.setTextColor(Color.parseColor("#37474F"));
+                PesquisaTimes.getLinearLayout().addView(result);
             }
             else
             {
+                if(tam==1)
+                    Toast.makeText(PesquisaTimes.getContext(), tam + " Result found for " + InserirPesquisaTimes.time.getText(), Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(PesquisaTimes.getContext(), tam + " Results found for " + InserirPesquisaTimes.time.getText(), Toast.LENGTH_LONG).show();
+            }
+        }
+
+        PesquisaTimes.getLinearLayout().setGravity(Gravity.CENTER);
+
+        for(int i=0; i<lista.size(); i++) {
+            if (lista.get(i).getStrTeamBadge() == "null") {
                 TextView space = new TextView(PesquisaTimes.getContext());
                 space.setText("\n");
                 PesquisaTimes.getLinearLayout().addView(space);
@@ -206,7 +172,19 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(250, 250);
                 image.setLayoutParams(lp);
                 Glide.with(PesquisaTimes.getContext())
-                        .load(lista.get(i).getStrTeamBadge()).override(250,250)
+                        .load(R.drawable.noimage).override(250, 250)
+                        .into(image);
+                PesquisaTimes.getLinearLayout().addView(image);
+            } else {
+                TextView space = new TextView(PesquisaTimes.getContext());
+                space.setText("\n");
+                PesquisaTimes.getLinearLayout().addView(space);
+
+                ImageView image = new ImageView(PesquisaTimes.getContext());
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(250, 250);
+                image.setLayoutParams(lp);
+                Glide.with(PesquisaTimes.getContext())
+                        .load(lista.get(i).getStrTeamBadge()).override(250, 250)
                         .into(image);
                 PesquisaTimes.getLinearLayout().addView(image);
             }
@@ -233,6 +211,66 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
 
             PesquisaTimes.getLinearLayout().addView(view);
 
+            TextView league = new TextView(PesquisaTimes.getContext());
+            league.setText("League: ");
+            league.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            league.setTextSize(20);
+            league.setTypeface(league.getTypeface(), Typeface.BOLD);
+            league.setTextColor(Color.parseColor("#37474F"));
+            PesquisaTimes.getLinearLayout().addView(league);
+
+            TextView leagueText = new TextView(PesquisaTimes.getContext());
+            leagueText.setText(lista.get(i).getStrLeague());
+            leagueText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            leagueText.setTextColor(Color.parseColor("#37474F"));
+            PesquisaTimes.getLinearLayout().addView(leagueText);
+
+            View view2 = new View(PesquisaTimes.getContext());
+            view2.setLayoutParams(lpView);
+            view2.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.DarkGray));
+
+            PesquisaTimes.getLinearLayout().addView(view2);
+
+            TextView formedYear = new TextView(PesquisaTimes.getContext());
+            formedYear.setText("Formed Year: ");
+            formedYear.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            formedYear.setTextSize(20);
+            formedYear.setTypeface(formedYear.getTypeface(), Typeface.BOLD);
+            formedYear.setTextColor(Color.parseColor("#37474F"));
+            PesquisaTimes.getLinearLayout().addView(formedYear);
+
+            TextView formedYearText = new TextView(PesquisaTimes.getContext());
+            formedYearText.setText(lista.get(i).getIntFormedYear());
+            formedYearText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            formedYearText.setTextColor(Color.parseColor("#37474F"));
+            PesquisaTimes.getLinearLayout().addView(formedYearText);
+
+            View view3 = new View(PesquisaTimes.getContext());
+            view3.setLayoutParams(lpView);
+            view3.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.DarkGray));
+
+            PesquisaTimes.getLinearLayout().addView(view3);
+
+            TextView manager = new TextView(PesquisaTimes.getContext());
+            manager.setText("Manager: ");
+            manager.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            manager.setTextSize(20);
+            manager.setTypeface(manager.getTypeface(), Typeface.BOLD);
+            manager.setTextColor(Color.parseColor("#37474F"));
+            PesquisaTimes.getLinearLayout().addView(manager);
+
+            TextView managerText = new TextView(PesquisaTimes.getContext());
+            managerText.setText(lista.get(i).getStrManager());
+            managerText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            managerText.setTextColor(Color.parseColor("#37474F"));
+            PesquisaTimes.getLinearLayout().addView(managerText);
+
+            View view4 = new View(PesquisaTimes.getContext());
+            view4.setLayoutParams(lpView);
+            view4.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.DarkGray));
+
+            PesquisaTimes.getLinearLayout().addView(view4);
+
             TextView estadio = new TextView(PesquisaTimes.getContext());
             estadio.setText("Stadium: ");
             estadio.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
@@ -243,12 +281,9 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
 
             TextView estadioText = new TextView(PesquisaTimes.getContext());
 
-            if(lista.get(i).getStrStadium().isEmpty())
-            {
+            if (lista.get(i).getStrStadium().isEmpty()) {
                 estadioText.setText("Stadium not available");
-            }
-            else
-            {
+            } else {
                 estadioText.setText(lista.get(i).getStrStadium());
             }
 
@@ -256,11 +291,11 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             estadioText.setTextColor(Color.parseColor("#37474F"));
             PesquisaTimes.getLinearLayout().addView(estadioText);
 
-            View view2 = new View(PesquisaTimes.getContext());
-            view2.setLayoutParams(lpView);
-            view2.setBackgroundColor(ContextCompat.getColor(view2.getContext(), R.color.DarkGray));
+            View view5 = new View(PesquisaTimes.getContext());
+            view5.setLayoutParams(lpView);
+            view5.setBackgroundColor(ContextCompat.getColor(view2.getContext(), R.color.DarkGray));
 
-            PesquisaTimes.getLinearLayout().addView(view2);
+            PesquisaTimes.getLinearLayout().addView(view5);
 
             TextView descricao = new TextView(PesquisaTimes.getContext());
             descricao.setText("Description: ");
@@ -271,12 +306,9 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             PesquisaTimes.getLinearLayout().addView(descricao);
 
             TextView descricaoText = new TextView(PesquisaTimes.getContext());
-            if(lista.get(i).getStrDescriptionEN()=="null")
-            {
+            if (lista.get(i).getStrDescriptionEN() == "null") {
                 descricaoText.setText("Description not available");
-            }
-            else
-            {
+            } else {
                 descricaoText.setText(lista.get(i).getStrDescriptionEN());
             }
 
@@ -284,12 +316,68 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             descricaoText.setTextColor(Color.parseColor("#37474F"));
             PesquisaTimes.getLinearLayout().addView(descricaoText);
 
-            View view3 = new View(PesquisaTimes.getContext());
-            view3.setLayoutParams(lpView);
-            view3.setBackgroundColor(ContextCompat.getColor(view3.getContext(), R.color.DarkGray));
+            View view6 = new View(PesquisaTimes.getContext());
+            view6.setLayoutParams(lpView);
+            view6.setBackgroundColor(ContextCompat.getColor(view3.getContext(), R.color.DarkGray));
 
-            PesquisaTimes.getLinearLayout().addView(view3);
+            PesquisaTimes.getLinearLayout().addView(view6);
+
+            ImageView[] imageFacebook;
+
+            imageFacebook = new ImageView[lista.size()];
+            imageFacebook[i] = new ImageView(PesquisaTimes.getContext());
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(150, 150, 1.0f);
+            imageFacebook[i].setLayoutParams(lp);
+            Glide.with(PesquisaTimes.getContext())
+                    .load(R.drawable.facebook).override(150, 150)
+                    .into(imageFacebook[i]);
+            imageFacebook[i].setId(i);
+            PesquisaTimes.getLinearLayout().addView(imageFacebook[i]);
+
+            imageFacebook[i].setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    if(lista.get(v.getId()).getStrFacebook().isEmpty())
+                    {
+                        Toast.makeText(PesquisaTimes.getContext(), "This team doesn't contain any information about his facebook!!" , Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        PesquisaTimes.getContext().startActivity(newFacebookIntent(PesquisaTimes.getContext().getPackageManager(), "http://" + lista.get(v.getId()).getStrFacebook()));
+                    }
+                }
+            });
+
+            ImageView imageInstagram = new ImageView(PesquisaTimes.getContext());
+            imageInstagram.setLayoutParams(lp);
+            Glide.with(PesquisaTimes.getContext())
+                    .load(R.drawable.instagram).override(150, 150)
+                    .into(imageInstagram);
+            PesquisaTimes.getLinearLayout().addView(imageInstagram);
+
+
+
+            View view7 = new View(PesquisaTimes.getContext());
+            view7.setLayoutParams(lpView);
+            view7.setBackgroundColor(ContextCompat.getColor(view3.getContext(), R.color.DarkGray));
+
+            PesquisaTimes.getLinearLayout().addView(view7);
+
+
+        
         }
+    }
+
+    public  Intent newFacebookIntent(PackageManager pm, String url) {
+        Uri uri = Uri.parse(url);
+        try {
+            ApplicationInfo applicationInfo = pm.getApplicationInfo("com.facebook.katana", 0);
+            if (applicationInfo.enabled) {
+                // http://stackoverflow.com/a/24547437/1048340
+                uri = Uri.parse("fb://facewebmodal/f?href=" + url);
+            }
+        } catch (PackageManager.NameNotFoundException ignored) {
+        }
+        return new Intent(Intent.ACTION_VIEW, uri);
     }
 
 }
