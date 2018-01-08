@@ -25,7 +25,8 @@
         <activity android:name=".InserirPesquisaTimes" />
         <activity android:name=".InserirPesquisaAllJogadores" />
         <activity android:name=".InserirPesquisaSingleJogador" />
-        <activity android:name=".rss.RssActivity"></activity>
+        <activity android:name=".rss.RssActivity" />
+        <activity android:name=".rss.RssTimesActivity" />
     </application>
 
 </manifest>

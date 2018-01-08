@@ -19,8 +19,9 @@ public class EstruturaTimes {
     private String strTwitter;
     private String strInstagram;
     private String strYoutube;
+    private String strRSS;
 
-    public EstruturaTimes(String strTeam, String strStadium, String strDescriptionEN, String strTeamBadge, String strFacebook, String strLeague, String intFormedYear, String strManager, String strCountry, String strWebsite, String strTwitter, String strInstagram, String strYoutube) {
+    public EstruturaTimes(String strTeam, String strStadium, String strDescriptionEN, String strTeamBadge, String strFacebook, String strLeague, String intFormedYear, String strManager, String strCountry, String strWebsite, String strTwitter, String strInstagram, String strYoutube, String strRSS) {
         this.strTeam = strTeam;
         this.strStadium = strStadium;
         this.strDescriptionEN = strDescriptionEN;
@@ -34,6 +35,7 @@ public class EstruturaTimes {
         this.strTwitter = strTwitter;
         this.strInstagram = strInstagram;
         this.strYoutube = strYoutube;
+        this.strRSS = strRSS;
     }
 
     public String getStrTeam() {
@@ -88,6 +90,10 @@ public class EstruturaTimes {
         return strYoutube;
     }
 
+    public String getStrRSS() {
+        return strRSS;
+    }
+
     public void setStrTeamBadge(String strTeamBadge) {
         this.strTeamBadge = strTeamBadge;
     }
@@ -138,6 +144,10 @@ public class EstruturaTimes {
 
     public void setStrYoutube(String strYoutube) {
         this.strYoutube = strYoutube;
+    }
+
+    public void setStrRSS(String strRSS) {
+        this.strRSS = strRSS;
     }
 }
 

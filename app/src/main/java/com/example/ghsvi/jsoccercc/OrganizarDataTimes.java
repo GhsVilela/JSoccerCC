@@ -22,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.ghsvi.jsoccercc.rss.RssTimesActivity;
+import com.example.ghsvi.jsoccercc.rss.TimesNewsFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -76,7 +78,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
                     JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                     if(jsonObject.get("strSport").toString().equals("Soccer"))
                     {
-                        EstruturaTimes e = new EstruturaTimes(jsonObject.get("strTeam").toString(), jsonObject.get("strStadium").toString(), jsonObject.get("strDescriptionEN").toString(), jsonObject.get("strTeamBadge").toString(), jsonObject.get("strFacebook").toString(), jsonObject.get("strLeague").toString(), jsonObject.get("intFormedYear").toString(), jsonObject.get("strManager").toString(), jsonObject.get("strCountry").toString(), jsonObject.get("strWebsite").toString(), jsonObject.get("strTwitter").toString(), jsonObject.get("strInstagram").toString(), jsonObject.get("strYoutube").toString());
+                        EstruturaTimes e = new EstruturaTimes(jsonObject.get("strTeam").toString(), jsonObject.get("strStadium").toString(), jsonObject.get("strDescriptionEN").toString(), jsonObject.get("strTeamBadge").toString(), jsonObject.get("strFacebook").toString(), jsonObject.get("strLeague").toString(), jsonObject.get("intFormedYear").toString(), jsonObject.get("strManager").toString(), jsonObject.get("strCountry").toString(), jsonObject.get("strWebsite").toString(), jsonObject.get("strTwitter").toString(), jsonObject.get("strInstagram").toString(), jsonObject.get("strYoutube").toString(), jsonObject.get("strRSS").toString());
                         lista.add(e);
                         tam++;
                     }
@@ -362,16 +364,33 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             space.setText("\n");
             PesquisaTimes.getLinearLayout().addView(space);
 
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(60, 60);
+
+            //WebSite
+
+            ImageView[] imageInternet;
+
+            imageInternet = new ImageView[lista.size()];
+            imageInternet[i] = new ImageView(PesquisaTimes.getContext());
+            imageInternet[i].setLayoutParams(lp);
+            Glide.with(PesquisaTimes.getContext())
+                    .load(R.drawable.internet).override(60, 60)
+                    .into(imageInternet[i]);
+            imageInternet[i].setId(i);
+
+            //Facebook
+
             ImageView[] imageFacebook;
 
             imageFacebook = new ImageView[lista.size()];
             imageFacebook[i] = new ImageView(PesquisaTimes.getContext());
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(100, 100);
             imageFacebook[i].setLayoutParams(lp);
             Glide.with(PesquisaTimes.getContext())
-                    .load(R.drawable.facebook).override(100, 100)
+                    .load(R.drawable.facebook).override(60, 60)
                     .into(imageFacebook[i]);
             imageFacebook[i].setId(i);
+
+            //Instagram
 
             ImageView[] imageInstagram;
 
@@ -379,22 +398,86 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             imageInstagram[i] = new ImageView(PesquisaTimes.getContext());
             imageInstagram[i].setLayoutParams(lp);
             Glide.with(PesquisaTimes.getContext())
-                    .load(R.drawable.instagram).override(100, 100)
+                    .load(R.drawable.instagram).override(60, 60)
                     .into(imageInstagram[i]);
             imageInstagram[i].setId(i);
 
+            //Twitter
+
+            ImageView[] imageTwitter;
+
+            imageTwitter = new ImageView[lista.size()];
+            imageTwitter[i] = new ImageView(PesquisaTimes.getContext());
+            imageTwitter[i].setLayoutParams(lp);
+            Glide.with(PesquisaTimes.getContext())
+                    .load(R.drawable.twitter).override(60, 60)
+                    .into(imageTwitter[i]);
+            imageTwitter[i].setId(i);
+
+            //Youtube
+
+            ImageView[] imageYoutube;
+
+            imageYoutube = new ImageView[lista.size()];
+            imageYoutube[i] = new ImageView(PesquisaTimes.getContext());
+            imageYoutube[i].setLayoutParams(lp);
+            Glide.with(PesquisaTimes.getContext())
+                    .load(R.drawable.youtube).override(60, 60)
+                    .into(imageYoutube[i]);
+            imageYoutube[i].setId(i);
+
+            //RSS
+
+            ImageView[] imageRSS;
+
+            imageRSS = new ImageView[lista.size()];
+            imageRSS[i] = new ImageView(PesquisaTimes.getContext());
+            imageRSS[i].setLayoutParams(lp);
+            Glide.with(PesquisaTimes.getContext())
+                    .load(R.drawable.rss).override(60, 60)
+                    .into(imageRSS[i]);
+            imageRSS[i].setId(i);
+
             LinearLayout socialNetwork = new LinearLayout(PesquisaTimes.getContext());
-            socialNetwork.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             socialNetwork.setOrientation(LinearLayout.HORIZONTAL);
 
-            if(!lista.get(i).getStrFacebook().isEmpty())
-            socialNetwork.addView(imageFacebook[i]);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-            if(!lista.get(i).getStrInstagram().isEmpty())
-            socialNetwork.addView(imageInstagram[i]);
+            layoutParams.setMargins(10, 0, 10, 5);
+            //socialNetwork.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
 
-            PesquisaTimes.getLinearLayout().addView(socialNetwork);
+            if(!lista.get(i).getStrWebsite().isEmpty() && !lista.get(i).getStrWebsite().equals("null"))
+                socialNetwork.addView(imageInternet[i], layoutParams);
+
+            if(!lista.get(i).getStrFacebook().isEmpty() && !lista.get(i).getStrFacebook().equals("null"))
+                socialNetwork.addView(imageFacebook[i], layoutParams);
+
+            if(!lista.get(i).getStrInstagram().isEmpty() && !lista.get(i).getStrInstagram().equals("null"))
+                socialNetwork.addView(imageInstagram[i], layoutParams);
+
+            if(!lista.get(i).getStrTwitter().isEmpty() && !lista.get(i).getStrTwitter().equals("null"))
+                socialNetwork.addView(imageTwitter[i], layoutParams);
+
+            if(!lista.get(i).getStrYoutube().isEmpty() && !lista.get(i).getStrYoutube().equals("null"))
+                socialNetwork.addView(imageYoutube[i], layoutParams);
+
+            if(!lista.get(i).getStrRSS().isEmpty() && !lista.get(i).getStrRSS().equals("null"))
+                socialNetwork.addView(imageRSS[i], layoutParams);
+
+            PesquisaTimes.getLinearLayout().addView(socialNetwork, layoutParams);
+
+            imageInternet[i].setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+                    Uri uri = Uri.parse("http://" + lista.get(v.getId()).getStrWebsite());
+
+                    Intent website = new Intent(Intent.ACTION_VIEW, uri);
+
+                    PesquisaTimes.getContext().startActivity(website);
+                }
+            });
 
 
             imageFacebook[i].setOnClickListener(new View.OnClickListener() {
@@ -411,19 +494,51 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
 
             imageInstagram[i].setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    /*
-                    if(lista.get(v.getId()).getStrFacebook().isEmpty())
-                    {
-                        Toast.makeText(PesquisaTimes.getContext(), "This team doesn't contain any information about his facebook!!" , Toast.LENGTH_LONG).show();
-                    }
-                    */
-                    PesquisaTimes.getContext().startActivity(newInstagramIntent("http://" + lista.get(v.getId()).getStrInstagram()));
+
+
+
+                    PesquisaTimes.getContext().startActivity(newInstagramIntent(PesquisaTimes.getContext().getPackageManager(),"http://" + lista.get(v.getId()).getStrInstagram()));
                 }
             });
 
+            imageTwitter[i].setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
 
 
 
+                    PesquisaTimes.getContext().startActivity(newTwitterIntent(PesquisaTimes.getContext().getPackageManager(), "http://" + lista.get(v.getId()).getStrTwitter()));
+
+                }
+            });
+
+            imageYoutube[i].setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+
+
+                    PesquisaTimes.getContext().startActivity(newYoutubeIntent(PesquisaTimes.getContext().getPackageManager(), "http://" + lista.get(v.getId()).getStrYoutube()));
+
+                }
+            });
+
+            imageRSS[i].setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                        /*
+                    Uri uri = Uri.parse(lista.get(v.getId()).getStrRSS());
+
+                    Intent website = new Intent(Intent.ACTION_VIEW, uri);
+
+                    PesquisaTimes.getContext().startActivity(website);
+                    */
+
+                    RssTimesActivity.setNameTeam(lista.get(v.getId()).getStrTeam());
+
+                    TimesNewsFragment.setRssURL(lista.get(v.getId()).getStrRSS());
+
+                    Intent it = new Intent(PesquisaTimes.getContext(), RssTimesActivity.class);
+                    PesquisaTimes.getContext().startActivity(it);
+                }
+            });
 
             View view7 = new View(PesquisaTimes.getContext());
             view7.setLayoutParams(lpView);
@@ -448,15 +563,44 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
         return new Intent(Intent.ACTION_VIEW, uri);
     }
 
-    public  Intent newInstagramIntent(String url) {
+    public  Intent newInstagramIntent(PackageManager pm, String url) {
         Uri uri = Uri.parse(url);
 
         try {
+            pm.getPackageInfo("com.instagram.android", 0);
             Intent instaApp = new Intent(Intent.ACTION_VIEW, uri);
-            instaApp.setPackage("com.instagram.android");
+            instaApp.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             return instaApp;
 
-        } catch (ActivityNotFoundException e) {
+        } catch (Exception e) {
+            return new Intent(Intent.ACTION_VIEW, uri);
+        }
+    }
+
+    public  Intent newTwitterIntent(PackageManager pm, String url) {
+        Uri uri = Uri.parse(url);
+        try {
+            // get the Twitter app if possible
+            pm.getPackageInfo("com.twitter.android", 0);
+            Intent intentTwitter = new Intent(Intent.ACTION_VIEW, uri);
+            intentTwitter.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            return intentTwitter;
+        } catch (Exception e) {
+            // no Twitter app, revert to browser
+            return new Intent(Intent.ACTION_VIEW, uri);
+        }
+    }
+
+    public  Intent newYoutubeIntent(PackageManager pm, String url) {
+        Uri uri = Uri.parse(url);
+        try {
+            // get the youtube app if possible
+            pm.getPackageInfo("com.youtube.android", 0);
+            Intent intentYoutube= new Intent(Intent.ACTION_VIEW, uri);
+            //intentYoutube.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            return intentYoutube;
+        } catch (Exception e) {
+            // no Twitter app, revert to browser
             return new Intent(Intent.ACTION_VIEW, uri);
         }
     }
