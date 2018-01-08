@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.View;
@@ -30,50 +31,55 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 /**
  * Created by ghsvi on 29/12/2017.
  */
 
 public class OrganizarDataAllPlayers extends AsyncTask<Void, String, Void> {
 
-    String data = "";
-    ArrayList<EstruturaPlayers> lista = new ArrayList<>();
-    int tam;
+    private String data = "";
+    private ArrayList<EstruturaPlayers> lista = new ArrayList<>();
+    private int tam;
 
     @Override
     protected Void doInBackground(Void... voids) {
         try {
-            URL url = new URL("http://www.thesportsdb.com/api/v1/json/1/searchplayers.php?t=" + InserirPesquisaAllJogadores.allPlayers.getText());
 
-            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            InputStream inputStream = httpURLConnection.getInputStream();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            String line = "";
-            while(line!=null)
-            {
-                line = bufferedReader.readLine();
-                data = data + line;
-            }
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url("http://www.thesportsdb.com/api/v1/json/1/searchplayers.php?t=" + InserirPesquisaAllJogadores.allPlayers.getText())
+                    .build();
+
+            Response response = client.newCall(request).execute();
+            data = response.body().string();
 
             JSONObject jo = new JSONObject(data);
             JSONArray jsonArray = jo.getJSONArray("player");
 
-            tam = jsonArray.length();
-
-            int total = jsonArray.length()-1;
-
             for(int i=0; i<jsonArray.length(); i++)
             {
-                Thread.sleep(200);
-
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-                EstruturaPlayers e = new EstruturaPlayers(jsonObject.get("strPlayer").toString(), jsonObject.get("strGender").toString(), jsonObject.get("strNationality").toString(), jsonObject.get("strTeam").toString(), jsonObject.get("strSport").toString(), jsonObject.get("dateSigned").toString(), jsonObject.get("dateBorn").toString(), jsonObject.get("strBirthLocation").toString(),jsonObject.get("strPosition").toString(), jsonObject.get("strHeight").toString(),jsonObject.get("strWeight").toString(), jsonObject.get("strThumb").toString(), jsonObject.get("strCutout").toString(), jsonObject.get("strDescriptionEN").toString());
-                lista.add(e);
+                if(jsonObject.get("strSport").toString().equals("Soccer"))
+                {
+                    EstruturaPlayers e = new EstruturaPlayers(jsonObject.get("strPlayer").toString(), jsonObject.get("strGender").toString(), jsonObject.get("strNationality").toString(), jsonObject.get("strTeam").toString(), jsonObject.get("strSport").toString(), jsonObject.get("dateSigned").toString(), jsonObject.get("dateBorn").toString(), jsonObject.get("strBirthLocation").toString(),jsonObject.get("strPosition").toString(), jsonObject.get("strHeight").toString(),jsonObject.get("strWeight").toString(), jsonObject.get("strThumb").toString(), jsonObject.get("strCutout").toString(), jsonObject.get("strDescriptionEN").toString(), jsonObject.get("strWebsite").toString(), jsonObject.get("strFacebook").toString(), jsonObject.get("strTwitter").toString(), jsonObject.get("strInstagram").toString(), jsonObject.get("strYoutube").toString());
+                    lista.add(e);
+                    tam++;
+                }
+            }
 
-                String m = i % 2 == 0 ? "Organizing Components" : "Wait!!";
+            for(int j=0; j<=tam; j++)
+            {
+                Thread.sleep(300); // 2 segundos
+
+                String m = j % 2 == 0 ? "Organizing Components" : "Wait!!";
 
                 // exibimos o progresso
-                this.publishProgress(String.valueOf(i), String.valueOf(total), m);
+                this.publishProgress(String.valueOf(j), String.valueOf(tam), m);
             }
 
 
@@ -116,21 +122,40 @@ public class OrganizarDataAllPlayers extends AsyncTask<Void, String, Void> {
         super.onPostExecute(aVoid);
 
 
-        if(tam==0)
+        if(data.isEmpty())
         {
             PesquisaAllPlayers.getmProgressBar().cancel();
-            Toast.makeText(PesquisaAllPlayers.getContext(), "No results found, please try again using a different name!!", Toast.LENGTH_LONG).show();
+            Snackbar.make(PesquisaAllPlayers.getLinearLayout(), "API is Offline, try again later!!", Snackbar.LENGTH_LONG).show();
 
-            TextView result = new TextView(PesquisaAllPlayers.getContext());
-            result.setText("No results found, please try again using a different name.");
+            TextView result = new TextView(PesquisaTimes.getContext());
+            result.setText("API is Offline, try again later.");
             result.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             result.setTextSize(20);
-            result.setTextColor(Color.parseColor("#37474F"));
+            result.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
             PesquisaAllPlayers.getLinearLayout().addView(result);
+
         }
         else
         {
-            Toast.makeText(PesquisaAllPlayers.getContext(), tam + " Results found for " + InserirPesquisaAllJogadores.allPlayers.getText(), Toast.LENGTH_LONG).show();
+            if(tam==0)
+            {
+                PesquisaAllPlayers.getmProgressBar().cancel();
+                Snackbar.make(PesquisaAllPlayers.getLinearLayout(), "No results found, please try again using a different name!!", Snackbar.LENGTH_LONG).show();
+
+                TextView result = new TextView(PesquisaAllPlayers.getContext());
+                result.setText("No results found, please try again using a different name.");
+                result.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+                result.setTextSize(20);
+                result.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
+                PesquisaAllPlayers.getLinearLayout().addView(result);
+            }
+            else
+            {
+                if(tam==1)
+                    Toast.makeText(PesquisaAllPlayers.getContext(), tam + " Result found for " + InserirPesquisaAllJogadores.allPlayers.getText(), Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(PesquisaAllPlayers.getContext(), tam + " Results found for " + InserirPesquisaAllJogadores.allPlayers.getText(), Toast.LENGTH_LONG).show();
+            }
         }
 
 
@@ -139,7 +164,7 @@ public class OrganizarDataAllPlayers extends AsyncTask<Void, String, Void> {
         for(int i=0; i<lista.size(); i++)
         {
 
-            if(lista.get(i).getStrCutout()=="null")
+            if (!lista.get(i).getStrCutout().equals("null") && !lista.get(i).getStrThumb().equals("null"))
             {
                 TextView space = new TextView(PesquisaAllPlayers.getContext());
                 space.setText("\n");
@@ -149,11 +174,11 @@ public class OrganizarDataAllPlayers extends AsyncTask<Void, String, Void> {
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(250, 250);
                 image.setLayoutParams(lp);
                 Glide.with(PesquisaAllPlayers.getContext())
-                        .load(lista.get(i).getStrThumb()).override(250,250)
+                        .load(lista.get(i).getStrCutout()).override(250, 250)
                         .into(image);
                 PesquisaAllPlayers.getLinearLayout().addView(image);
             }
-            else
+            else if(lista.get(i).getStrThumb().equals("null") && !lista.get(i).getStrCutout().equals("null"))
             {
                 TextView space = new TextView(PesquisaAllPlayers.getContext());
                 space.setText("\n");
@@ -163,7 +188,37 @@ public class OrganizarDataAllPlayers extends AsyncTask<Void, String, Void> {
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(250, 250);
                 image.setLayoutParams(lp);
                 Glide.with(PesquisaAllPlayers.getContext())
-                        .load(lista.get(i).getStrCutout()).override(250,250)
+                        .load(lista.get(i).getStrCutout()).override(250, 250)
+                        .into(image);
+                PesquisaAllPlayers.getLinearLayout().addView(image);
+            }
+
+            else if(lista.get(i).getStrCutout().equals("null") && !lista.get(i).getStrThumb().equals("null"))
+            {
+                TextView space = new TextView(PesquisaAllPlayers.getContext());
+                space.setText("\n");
+                PesquisaAllPlayers.getLinearLayout().addView(space);
+
+                ImageView image = new ImageView(PesquisaAllPlayers.getContext());
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(250, 250);
+                image.setLayoutParams(lp);
+                Glide.with(PesquisaAllPlayers.getContext())
+                        .load(lista.get(i).getStrThumb()).override(250, 250)
+                        .into(image);
+                PesquisaAllPlayers.getLinearLayout().addView(image);
+            }
+
+            else if(lista.get(i).getStrCutout().equals("null") && lista.get(i).getStrThumb().equals("null"))
+            {
+                TextView space = new TextView(PesquisaAllPlayers.getContext());
+                space.setText("\n");
+                PesquisaAllPlayers.getLinearLayout().addView(space);
+
+                ImageView image = new ImageView(PesquisaAllPlayers.getContext());
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(250, 250);
+                image.setLayoutParams(lp);
+                Glide.with(PesquisaAllPlayers.getContext())
+                        .load(R.drawable.noplayer).override(250, 250)
                         .into(image);
                 PesquisaAllPlayers.getLinearLayout().addView(image);
             }
@@ -175,13 +230,13 @@ public class OrganizarDataAllPlayers extends AsyncTask<Void, String, Void> {
             nome.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             nome.setTextSize(20);
             nome.setTypeface(nome.getTypeface(), Typeface.BOLD);
-            nome.setTextColor(Color.parseColor("#37474F"));
+            nome.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
             PesquisaAllPlayers.getLinearLayout().addView(nome);
 
             TextView nomeText = new TextView(PesquisaAllPlayers.getContext());
             nomeText.setText(lista.get(i).getStrPlayer());
             nomeText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
-            nomeText.setTextColor(Color.parseColor("#37474F"));
+            nomeText.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
             PesquisaAllPlayers.getLinearLayout().addView(nomeText);
 
             View view = new View(PesquisaAllPlayers.getContext());
@@ -195,13 +250,13 @@ public class OrganizarDataAllPlayers extends AsyncTask<Void, String, Void> {
             nationality.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             nationality.setTextSize(20);
             nationality.setTypeface(nome.getTypeface(), Typeface.BOLD);
-            nationality.setTextColor(Color.parseColor("#37474F"));
+            nationality.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
             PesquisaAllPlayers.getLinearLayout().addView(nationality);
 
             TextView nationalityText = new TextView(PesquisaAllPlayers.getContext());
             nationalityText.setText(lista.get(i).getStrNationality());
             nationalityText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
-            nationalityText.setTextColor(Color.parseColor("#37474F"));
+            nationalityText.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
             PesquisaAllPlayers.getLinearLayout().addView(nationalityText);
 
             View view2 = new View(PesquisaAllPlayers.getContext());
@@ -215,13 +270,13 @@ public class OrganizarDataAllPlayers extends AsyncTask<Void, String, Void> {
             team.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             team.setTextSize(20);
             team.setTypeface(nome.getTypeface(), Typeface.BOLD);
-            team.setTextColor(Color.parseColor("#37474F"));
+            team.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
             PesquisaAllPlayers.getLinearLayout().addView(team);
 
             TextView teamText = new TextView(PesquisaAllPlayers.getContext());
             teamText.setText(lista.get(i).getStrTeam());
             teamText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
-            teamText.setTextColor(Color.parseColor("#37474F"));
+            teamText.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
             PesquisaAllPlayers.getLinearLayout().addView(teamText);
 
             View view3 = new View(PesquisaAllPlayers.getContext());
@@ -235,13 +290,13 @@ public class OrganizarDataAllPlayers extends AsyncTask<Void, String, Void> {
             description.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             description.setTextSize(20);
             description.setTypeface(nome.getTypeface(), Typeface.BOLD);
-            description.setTextColor(Color.parseColor("#37474F"));
+            description.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
             PesquisaAllPlayers.getLinearLayout().addView(description);
 
             TextView descriptionText = new TextView(PesquisaAllPlayers.getContext());
             descriptionText.setText(lista.get(i).getStrDescriptionEN());
             descriptionText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
-            descriptionText.setTextColor(Color.parseColor("#37474F"));
+            descriptionText.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
             PesquisaAllPlayers.getLinearLayout().addView(descriptionText);
 
             View view4 = new View(PesquisaAllPlayers.getContext());

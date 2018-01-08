@@ -3,7 +3,7 @@
 
     <item android:id="@+id/home"
         android:title="Home"
-        android:icon="@mipmap/ic_soccer_team" />
+        android:icon="@mipmap/ic_home_black_48dp" />
 
     <item android:id="@+id/search_team"
         android:title="Search for team by name"
@@ -11,10 +11,10 @@
 
     <item android:id="@+id/search_all_players"
         android:title="Search for all players from team"
-        android:icon="@mipmap/ic_soccer_team" />
+        android:icon="@mipmap/ic_two_soccer_players" />
 
     <item android:id="@+id/search_player_by_name"
         android:title="Search for players by name"
-        android:icon="@mipmap/ic_soccer_team" />
+        android:icon="@mipmap/ic_soccer_player" />
 
 </menu>

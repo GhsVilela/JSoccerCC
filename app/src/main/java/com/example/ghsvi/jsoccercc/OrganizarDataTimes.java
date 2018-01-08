@@ -1,7 +1,5 @@
 package com.example.ghsvi.jsoccercc;
 
-import android.annotation.SuppressLint;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -29,13 +27,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
@@ -48,10 +41,9 @@ import okhttp3.Response;
 
 public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
 
-    String data = "";
-    ArrayList<EstruturaTimes> lista = new ArrayList<>();
-    LinearLayout linearLayout;
-    int tam=0;
+    private String data = "";
+    private ArrayList<EstruturaTimes> lista = new ArrayList<>();
+    private int tam=0;
 
     @Override
     protected Void doInBackground(Void... voids) {
@@ -126,8 +118,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
         }
     }
 
-
-    @SuppressLint("ResourceAsColor")
+   // @SuppressLint("ResourceAsColor")
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onPostExecute(Void aVoid) {
@@ -142,7 +133,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             result.setText("API is Offline, try again later.");
             result.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             result.setTextSize(20);
-            result.setTextColor(Color.parseColor("#37474F"));
+            result.setTextColor(ContextCompat.getColor(PesquisaTimes.getContext(), R.color.AppColor));
             PesquisaTimes.getLinearLayout().addView(result);
 
         }
@@ -157,7 +148,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
                 result.setText("No results found, please try again using a different name.");
                 result.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
                 result.setTextSize(20);
-                result.setTextColor(Color.parseColor("#37474F"));
+                result.setTextColor(ContextCompat.getColor(PesquisaTimes.getContext(), R.color.AppColor));
                 PesquisaTimes.getLinearLayout().addView(result);
             }
             else
@@ -172,7 +163,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
         PesquisaTimes.getLinearLayout().setGravity(Gravity.CENTER);
 
         for(int i=0; i<lista.size(); i++) {
-            if (lista.get(i).getStrTeamBadge() == "null") {
+            if (lista.get(i).getStrTeamBadge().equals("null")) {
                 TextView space = new TextView(PesquisaTimes.getContext());
                 space.setText("\n");
                 PesquisaTimes.getLinearLayout().addView(space);
@@ -205,13 +196,22 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             nome.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             nome.setTextSize(20);
             nome.setTypeface(nome.getTypeface(), Typeface.BOLD);
-            nome.setTextColor(Color.parseColor("#37474F"));
+            nome.setTextColor(ContextCompat.getColor(PesquisaTimes.getContext(), R.color.AppColor));
             PesquisaTimes.getLinearLayout().addView(nome);
 
             TextView nomeText = new TextView(PesquisaTimes.getContext());
-            nomeText.setText(lista.get(i).getStrTeam());
+
+            if(lista.get(i).getStrTeam().equals("null"))
+            {
+                nomeText.setText("Name is not available");
+            }
+            else
+            {
+                nomeText.setText(lista.get(i).getStrTeam());
+            }
+
             nomeText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
-            nomeText.setTextColor(Color.parseColor("#37474F"));
+            nomeText.setTextColor(ContextCompat.getColor(PesquisaTimes.getContext(), R.color.AppColor));
             PesquisaTimes.getLinearLayout().addView(nomeText);
 
             View view = new View(PesquisaTimes.getContext());
@@ -225,13 +225,23 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             league.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             league.setTextSize(20);
             league.setTypeface(league.getTypeface(), Typeface.BOLD);
-            league.setTextColor(Color.parseColor("#37474F"));
+            league.setTextColor(ContextCompat.getColor(PesquisaTimes.getContext(), R.color.AppColor));
             PesquisaTimes.getLinearLayout().addView(league);
 
             TextView leagueText = new TextView(PesquisaTimes.getContext());
-            leagueText.setText(lista.get(i).getStrLeague());
+
+            if(lista.get(i).getStrLeague().equals("_No League"))
+            {
+                leagueText.setText("League is not available");
+            }
+            else
+            {
+                leagueText.setText(lista.get(i).getStrLeague());
+            }
+
+
             leagueText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
-            leagueText.setTextColor(Color.parseColor("#37474F"));
+            leagueText.setTextColor(ContextCompat.getColor(PesquisaTimes.getContext(), R.color.AppColor));
             PesquisaTimes.getLinearLayout().addView(leagueText);
 
             View view2 = new View(PesquisaTimes.getContext());
@@ -245,7 +255,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             formedYear.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             formedYear.setTextSize(20);
             formedYear.setTypeface(formedYear.getTypeface(), Typeface.BOLD);
-            formedYear.setTextColor(Color.parseColor("#37474F"));
+            formedYear.setTextColor(ContextCompat.getColor(PesquisaTimes.getContext(), R.color.AppColor));
             PesquisaTimes.getLinearLayout().addView(formedYear);
 
             TextView formedYearText = new TextView(PesquisaTimes.getContext());
@@ -260,7 +270,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             }
 
             formedYearText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
-            formedYearText.setTextColor(Color.parseColor("#37474F"));
+            formedYearText.setTextColor(ContextCompat.getColor(PesquisaTimes.getContext(), R.color.AppColor));
             PesquisaTimes.getLinearLayout().addView(formedYearText);
 
             View view3 = new View(PesquisaTimes.getContext());
@@ -274,7 +284,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             manager.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             manager.setTextSize(20);
             manager.setTypeface(manager.getTypeface(), Typeface.BOLD);
-            manager.setTextColor(Color.parseColor("#37474F"));
+            manager.setTextColor(ContextCompat.getColor(PesquisaTimes.getContext(), R.color.AppColor));
             PesquisaTimes.getLinearLayout().addView(manager);
 
             TextView managerText = new TextView(PesquisaTimes.getContext());
@@ -286,7 +296,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             }
 
             managerText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
-            managerText.setTextColor(Color.parseColor("#37474F"));
+            managerText.setTextColor(ContextCompat.getColor(PesquisaTimes.getContext(), R.color.AppColor));
             PesquisaTimes.getLinearLayout().addView(managerText);
 
             View view4 = new View(PesquisaTimes.getContext());
@@ -300,7 +310,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             estadio.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             estadio.setTextSize(20);
             estadio.setTypeface(estadio.getTypeface(), Typeface.BOLD);
-            estadio.setTextColor(Color.parseColor("#37474F"));
+            estadio.setTextColor(ContextCompat.getColor(PesquisaTimes.getContext(), R.color.AppColor));
             PesquisaTimes.getLinearLayout().addView(estadio);
 
             TextView estadioText = new TextView(PesquisaTimes.getContext());
@@ -312,7 +322,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             }
 
             estadioText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
-            estadioText.setTextColor(Color.parseColor("#37474F"));
+            estadioText.setTextColor(ContextCompat.getColor(PesquisaTimes.getContext(), R.color.AppColor));
             PesquisaTimes.getLinearLayout().addView(estadioText);
 
             View view5 = new View(PesquisaTimes.getContext());
@@ -326,13 +336,22 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             country.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             country.setTextSize(20);
             country.setTypeface(country.getTypeface(), Typeface.BOLD);
-            country.setTextColor(Color.parseColor("#37474F"));
+            country.setTextColor(ContextCompat.getColor(PesquisaTimes.getContext(), R.color.AppColor));
             PesquisaTimes.getLinearLayout().addView(country);
 
             TextView countryText = new TextView(PesquisaTimes.getContext());
-            countryText.setText(lista.get(i).getStrCountry());
+
+            if(lista.get(i).getStrCountry().equals("null"))
+            {
+                countryText.setText("Country is not available");
+            }
+            else
+            {
+                countryText.setText(lista.get(i).getStrCountry());
+            }
+
             countryText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
-            countryText.setTextColor(Color.parseColor("#37474F"));
+            countryText.setTextColor(ContextCompat.getColor(PesquisaTimes.getContext(), R.color.AppColor));
             PesquisaTimes.getLinearLayout().addView(countryText);
 
             View view6 = new View(PesquisaTimes.getContext());
@@ -346,18 +365,18 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             descricao.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             descricao.setTextSize(20);
             descricao.setTypeface(descricao.getTypeface(), Typeface.BOLD);
-            descricao.setTextColor(Color.parseColor("#37474F"));
+            descricao.setTextColor(ContextCompat.getColor(PesquisaTimes.getContext(), R.color.AppColor));
             PesquisaTimes.getLinearLayout().addView(descricao);
 
             TextView descricaoText = new TextView(PesquisaTimes.getContext());
-            if (lista.get(i).getStrDescriptionEN() == "null") {
+            if (lista.get(i).getStrDescriptionEN().equals("null")){
                 descricaoText.setText("Description is not available");
             } else {
                 descricaoText.setText(lista.get(i).getStrDescriptionEN());
             }
 
             descricaoText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
-            descricaoText.setTextColor(Color.parseColor("#37474F"));
+            descricaoText.setTextColor(ContextCompat.getColor(PesquisaTimes.getContext(), R.color.AppColor));
             PesquisaTimes.getLinearLayout().addView(descricaoText);
 
             TextView space = new TextView(PesquisaTimes.getContext());
@@ -551,7 +570,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
         }
     }
 
-    public  Intent newFacebookIntent(PackageManager pm, String url) {
+    private  Intent newFacebookIntent(PackageManager pm, String url) {
         Uri uri = Uri.parse(url);
         try {
             ApplicationInfo applicationInfo = pm.getApplicationInfo("com.facebook.katana", 0);
@@ -563,7 +582,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
         return new Intent(Intent.ACTION_VIEW, uri);
     }
 
-    public  Intent newInstagramIntent(PackageManager pm, String url) {
+    private  Intent newInstagramIntent(PackageManager pm, String url) {
         Uri uri = Uri.parse(url);
 
         try {
@@ -577,7 +596,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
         }
     }
 
-    public  Intent newTwitterIntent(PackageManager pm, String url) {
+    private  Intent newTwitterIntent(PackageManager pm, String url) {
         Uri uri = Uri.parse(url);
         try {
             // get the Twitter app if possible
@@ -591,12 +610,13 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
         }
     }
 
-    public  Intent newYoutubeIntent(PackageManager pm, String url) {
+    private  Intent newYoutubeIntent(PackageManager pm, String url) {
         Uri uri = Uri.parse(url);
         try {
             // get the youtube app if possible
             pm.getPackageInfo("com.youtube.android", 0);
-            Intent intentYoutube= new Intent(Intent.ACTION_VIEW, uri);
+            Intent intentYoutube;
+            intentYoutube = new Intent(Intent.ACTION_VIEW, uri);
             //intentYoutube.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             return intentYoutube;
         } catch (Exception e) {

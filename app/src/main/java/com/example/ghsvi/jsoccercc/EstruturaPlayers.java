@@ -20,8 +20,13 @@ public class EstruturaPlayers {
     private String strThumb;
     private String strCutout;
     private String strDescriptionEN;
+    private String strWebsite;
+    private String strFacebook;
+    private String strTwitter;
+    private String strInstagram;
+    private String strYoutube;
 
-    public EstruturaPlayers(String strPlayer, String strGender, String strNationality, String strTeam, String strSport, String dateSigned, String dateBorn, String strBirthLocation, String strPosition, String strHeight, String strWeight, String strThumb, String strCutout, String strDescriptionEN) {
+    public EstruturaPlayers(String strPlayer, String strGender, String strNationality, String strTeam, String strSport, String dateSigned, String dateBorn, String strBirthLocation, String strPosition, String strHeight, String strWeight, String strThumb, String strCutout, String strDescriptionEN, String strWebsite, String strFacebook, String strTwitter, String strInstagram, String strYoutube) {
 
         this.strPlayer = strPlayer;
         this.strGender = strGender;
@@ -37,6 +42,11 @@ public class EstruturaPlayers {
         this.strThumb = strThumb;
         this.strCutout = strCutout;
         this.strDescriptionEN = strDescriptionEN;
+        this.strWebsite = strWebsite;
+        this.strFacebook = strFacebook;
+        this.strTwitter = strTwitter;
+        this.strInstagram = strInstagram;
+        this.strYoutube = strYoutube;
     }
 
     public String getStrPlayer() {
@@ -95,6 +105,26 @@ public class EstruturaPlayers {
         return strDescriptionEN;
     }
 
+    public String getStrWebsite() {
+        return strWebsite;
+    }
+
+    public String getStrFacebook() {
+        return strFacebook;
+    }
+
+    public String getStrTwitter() {
+        return strTwitter;
+    }
+
+    public String getStrInstagram() {
+        return strInstagram;
+    }
+
+    public String getStrYoutube() {
+        return strYoutube;
+    }
+
     public void setStrPlayer(String strPlayer) {
         this.strPlayer = strPlayer;
     }
@@ -149,5 +179,25 @@ public class EstruturaPlayers {
 
     public void setStrDescriptionEN(String strDescriptionEN) {
         this.strDescriptionEN = strDescriptionEN;
+    }
+
+    public void setStrWebsite(String strWebsite) {
+        this.strWebsite = strWebsite;
+    }
+
+    public void setStrFacebook(String strFacebook) {
+        this.strFacebook = strFacebook;
+    }
+
+    public void setStrTwitter(String strTwitter) {
+        this.strTwitter = strTwitter;
+    }
+
+    public void setStrInstagram(String strInstagram) {
+        this.strInstagram = strInstagram;
+    }
+
+    public void setStrYoutube(String strYoutube) {
+        this.strYoutube = strYoutube;
     }
 }
