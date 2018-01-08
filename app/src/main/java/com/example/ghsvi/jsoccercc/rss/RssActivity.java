@@ -19,6 +19,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.ghsvi.jsoccercc.InserirPesquisaAllJogadores;
+import com.example.ghsvi.jsoccercc.InserirPesquisaSingleJogador;
 import com.example.ghsvi.jsoccercc.InserirPesquisaTimes;
 import com.example.ghsvi.jsoccercc.MainActivity;
 import com.example.ghsvi.jsoccercc.R;
@@ -155,7 +157,7 @@ public class RssActivity extends AppCompatActivity implements NavigationView.OnN
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.settings)
+        if (id == R.id.reportbugs)
         {
             return true;
         }
@@ -172,14 +174,25 @@ public class RssActivity extends AppCompatActivity implements NavigationView.OnN
             public void run() {
                 switch (item.getItemId()){
 
-                    case (R.id.search_team):
-                        Intent it = new Intent(RssActivity.this, InserirPesquisaTimes.class);
+                    case(R.id.home):
+                        Intent it = new Intent(RssActivity.this, MainActivity.class);
                         startActivity(it);
                         break;
 
-                    case(R.id.home):
-                        Intent it2 = new Intent(RssActivity.this, MainActivity.class);
+                    case (R.id.search_team):
+                        Intent it2 = new Intent(RssActivity.this, InserirPesquisaTimes.class);
                         startActivity(it2);
+                        break;
+
+                    case (R.id.search_all_players):
+                        Intent it3 = new Intent(RssActivity.this, InserirPesquisaAllJogadores.class);
+                        startActivity(it3);
+                        break;
+
+                    case (R.id.search_player_by_name):
+                        Intent it4 = new Intent(RssActivity.this, InserirPesquisaSingleJogador.class);
+                        startActivity(it4);
+                        break;
                 }
             }
         },400);

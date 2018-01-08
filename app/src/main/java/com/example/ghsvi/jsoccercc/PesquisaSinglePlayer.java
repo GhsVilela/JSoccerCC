@@ -105,7 +105,7 @@ public class PesquisaSinglePlayer extends AppCompatActivity implements Navigatio
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.settings)
+        if (id == R.id.reportbugs)
         {
             return true;
         }

@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.LinearLayout;
 
 public class PesquisaTimes extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -109,7 +108,7 @@ public class PesquisaTimes extends AppCompatActivity implements NavigationView.O
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.settings)
+        if (id == R.id.reportbugs)
         {
             return true;
         }

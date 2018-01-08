@@ -123,7 +123,7 @@ public class InserirPesquisaAllJogadores extends AppCompatActivity implements Na
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.settings)
+        if (id == R.id.reportbugs)
         {
             return true;
         }

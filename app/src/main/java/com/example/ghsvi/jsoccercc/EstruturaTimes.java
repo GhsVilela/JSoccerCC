@@ -14,8 +14,13 @@ public class EstruturaTimes {
     private String strLeague;
     private String intFormedYear;
     private String strManager;
+    private String strCountry;
+    private String strWebsite;
+    private String strTwitter;
+    private String strInstagram;
+    private String strYoutube;
 
-    public EstruturaTimes(String strTeam, String strStadium, String strDescriptionEN, String strTeamBadge, String strFacebook, String strLeague, String intFormedYear, String strManager) {
+    public EstruturaTimes(String strTeam, String strStadium, String strDescriptionEN, String strTeamBadge, String strFacebook, String strLeague, String intFormedYear, String strManager, String strCountry, String strWebsite, String strTwitter, String strInstagram, String strYoutube) {
         this.strTeam = strTeam;
         this.strStadium = strStadium;
         this.strDescriptionEN = strDescriptionEN;
@@ -24,6 +29,11 @@ public class EstruturaTimes {
         this.strLeague = strLeague;
         this.intFormedYear = intFormedYear;
         this.strManager = strManager;
+        this.strCountry = strCountry;
+        this.strWebsite = strWebsite;
+        this.strTwitter = strTwitter;
+        this.strInstagram = strInstagram;
+        this.strYoutube = strYoutube;
     }
 
     public String getStrTeam() {
@@ -58,6 +68,26 @@ public class EstruturaTimes {
         return strManager;
     }
 
+    public String getStrCountry() {
+        return strCountry;
+    }
+
+    public String getStrWebsite() {
+        return strWebsite;
+    }
+
+    public String getStrTwitter() {
+        return strTwitter;
+    }
+
+    public String getStrInstagram() {
+        return strInstagram;
+    }
+
+    public String getStrYoutube() {
+        return strYoutube;
+    }
+
     public void setStrTeamBadge(String strTeamBadge) {
         this.strTeamBadge = strTeamBadge;
     }
@@ -88,6 +118,26 @@ public class EstruturaTimes {
 
     public void setStrManager(String strManager) {
         this.strManager = strManager;
+    }
+
+    public void setStrCountry(String strCountry) {
+        this.strCountry = strCountry;
+    }
+
+    public void setStrWebsite(String strWebsite) {
+        this.strWebsite = strWebsite;
+    }
+
+    public void setStrTwitter(String strTwitter) {
+        this.strTwitter = strTwitter;
+    }
+
+    public void setStrInstagram(String strInstagram) {
+        this.strInstagram = strInstagram;
+    }
+
+    public void setStrYoutube(String strYoutube) {
+        this.strYoutube = strYoutube;
     }
 }
 

@@ -1,6 +1,7 @@
 package com.example.ghsvi.jsoccercc;
 
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -48,7 +49,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
     String data = "";
     ArrayList<EstruturaTimes> lista = new ArrayList<>();
     LinearLayout linearLayout;
-    int tam;
+    int tam=0;
 
     @Override
     protected Void doInBackground(Void... voids) {
@@ -66,23 +67,29 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
                 JSONObject jo = new JSONObject(data);
                 JSONArray jsonArray = jo.getJSONArray("teams");
 
-                tam = jsonArray.length();
-
-                int total = jsonArray.length()-1;
+               //int total = jsonArray.length()-1;
 
                 for(int i=0; i<jsonArray.length(); i++)
                 {
-                    Thread.sleep(500); // 2 segundos
+                    //Thread.sleep(500); // 2 segundos
 
                     JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-                    EstruturaTimes e = new EstruturaTimes(jsonObject.get("strTeam").toString(), jsonObject.get("strStadium").toString(), jsonObject.get("strDescriptionEN").toString(), jsonObject.get("strTeamBadge").toString(), jsonObject.get("strFacebook").toString(), jsonObject.get("strLeague").toString(), jsonObject.get("intFormedYear").toString(), jsonObject.get("strManager").toString());
-                    lista.add(e);
+                    if(jsonObject.get("strSport").toString().equals("Soccer"))
+                    {
+                        EstruturaTimes e = new EstruturaTimes(jsonObject.get("strTeam").toString(), jsonObject.get("strStadium").toString(), jsonObject.get("strDescriptionEN").toString(), jsonObject.get("strTeamBadge").toString(), jsonObject.get("strFacebook").toString(), jsonObject.get("strLeague").toString(), jsonObject.get("intFormedYear").toString(), jsonObject.get("strManager").toString(), jsonObject.get("strCountry").toString(), jsonObject.get("strWebsite").toString(), jsonObject.get("strTwitter").toString(), jsonObject.get("strInstagram").toString(), jsonObject.get("strYoutube").toString());
+                        lista.add(e);
+                        tam++;
+                    }
+                }
 
-                    String m = i % 2 == 0 ? "Organizing Components" : "Wait!!";
+                for(int j=0; j<=tam; j++)
+                {
+                    Thread.sleep(500); // 2 segundos
+
+                    String m = j % 2 == 0 ? "Organizing Components" : "Wait!!";
 
                     // exibimos o progresso
-                    this.publishProgress(String.valueOf(i), String.valueOf(total), m);
-
+                    this.publishProgress(String.valueOf(j), String.valueOf(tam), m);
                 }
 
         } catch (MalformedURLException e) {
@@ -240,7 +247,16 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             PesquisaTimes.getLinearLayout().addView(formedYear);
 
             TextView formedYearText = new TextView(PesquisaTimes.getContext());
-            formedYearText.setText(lista.get(i).getIntFormedYear());
+
+            if(lista.get(i).getIntFormedYear().equals("0"))
+            {
+                formedYearText.setText("Formed Year is not available");
+            }
+            else
+            {
+                formedYearText.setText(lista.get(i).getIntFormedYear());
+            }
+
             formedYearText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             formedYearText.setTextColor(Color.parseColor("#37474F"));
             PesquisaTimes.getLinearLayout().addView(formedYearText);
@@ -260,7 +276,13 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             PesquisaTimes.getLinearLayout().addView(manager);
 
             TextView managerText = new TextView(PesquisaTimes.getContext());
-            managerText.setText(lista.get(i).getStrManager());
+
+            if (lista.get(i).getStrManager().isEmpty()) {
+                managerText.setText("Manager is not available");
+            } else {
+                managerText.setText(lista.get(i).getStrManager());
+            }
+
             managerText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             managerText.setTextColor(Color.parseColor("#37474F"));
             PesquisaTimes.getLinearLayout().addView(managerText);
@@ -282,7 +304,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             TextView estadioText = new TextView(PesquisaTimes.getContext());
 
             if (lista.get(i).getStrStadium().isEmpty()) {
-                estadioText.setText("Stadium not available");
+                estadioText.setText("Stadium is not available");
             } else {
                 estadioText.setText(lista.get(i).getStrStadium());
             }
@@ -297,6 +319,26 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
 
             PesquisaTimes.getLinearLayout().addView(view5);
 
+            TextView country = new TextView(PesquisaTimes.getContext());
+            country.setText("Country: ");
+            country.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            country.setTextSize(20);
+            country.setTypeface(country.getTypeface(), Typeface.BOLD);
+            country.setTextColor(Color.parseColor("#37474F"));
+            PesquisaTimes.getLinearLayout().addView(country);
+
+            TextView countryText = new TextView(PesquisaTimes.getContext());
+            countryText.setText(lista.get(i).getStrCountry());
+            countryText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            countryText.setTextColor(Color.parseColor("#37474F"));
+            PesquisaTimes.getLinearLayout().addView(countryText);
+
+            View view6 = new View(PesquisaTimes.getContext());
+            view6.setLayoutParams(lpView);
+            view6.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.DarkGray));
+
+            PesquisaTimes.getLinearLayout().addView(view6);
+
             TextView descricao = new TextView(PesquisaTimes.getContext());
             descricao.setText("Description: ");
             descricao.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
@@ -307,7 +349,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
 
             TextView descricaoText = new TextView(PesquisaTimes.getContext());
             if (lista.get(i).getStrDescriptionEN() == "null") {
-                descricaoText.setText("Description not available");
+                descricaoText.setText("Description is not available");
             } else {
                 descricaoText.setText(lista.get(i).getStrDescriptionEN());
             }
@@ -316,43 +358,70 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             descricaoText.setTextColor(Color.parseColor("#37474F"));
             PesquisaTimes.getLinearLayout().addView(descricaoText);
 
-            View view6 = new View(PesquisaTimes.getContext());
-            view6.setLayoutParams(lpView);
-            view6.setBackgroundColor(ContextCompat.getColor(view3.getContext(), R.color.DarkGray));
-
-            PesquisaTimes.getLinearLayout().addView(view6);
+            TextView space = new TextView(PesquisaTimes.getContext());
+            space.setText("\n");
+            PesquisaTimes.getLinearLayout().addView(space);
 
             ImageView[] imageFacebook;
 
             imageFacebook = new ImageView[lista.size()];
             imageFacebook[i] = new ImageView(PesquisaTimes.getContext());
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(150, 150, 1.0f);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(100, 100);
             imageFacebook[i].setLayoutParams(lp);
             Glide.with(PesquisaTimes.getContext())
-                    .load(R.drawable.facebook).override(150, 150)
+                    .load(R.drawable.facebook).override(100, 100)
                     .into(imageFacebook[i]);
             imageFacebook[i].setId(i);
-            PesquisaTimes.getLinearLayout().addView(imageFacebook[i]);
+
+            ImageView[] imageInstagram;
+
+            imageInstagram = new ImageView[lista.size()];
+            imageInstagram[i] = new ImageView(PesquisaTimes.getContext());
+            imageInstagram[i].setLayoutParams(lp);
+            Glide.with(PesquisaTimes.getContext())
+                    .load(R.drawable.instagram).override(100, 100)
+                    .into(imageInstagram[i]);
+            imageInstagram[i].setId(i);
+
+            LinearLayout socialNetwork = new LinearLayout(PesquisaTimes.getContext());
+            socialNetwork.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            socialNetwork.setOrientation(LinearLayout.HORIZONTAL);
+
+            if(!lista.get(i).getStrFacebook().isEmpty())
+            socialNetwork.addView(imageFacebook[i]);
+
+            if(!lista.get(i).getStrInstagram().isEmpty())
+            socialNetwork.addView(imageInstagram[i]);
+
+
+            PesquisaTimes.getLinearLayout().addView(socialNetwork);
+
 
             imageFacebook[i].setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+                    /*
                     if(lista.get(v.getId()).getStrFacebook().isEmpty())
                     {
                         Toast.makeText(PesquisaTimes.getContext(), "This team doesn't contain any information about his facebook!!" , Toast.LENGTH_LONG).show();
                     }
-                    else
-                    {
+                    */
                         PesquisaTimes.getContext().startActivity(newFacebookIntent(PesquisaTimes.getContext().getPackageManager(), "http://" + lista.get(v.getId()).getStrFacebook()));
-                    }
                 }
             });
 
-            ImageView imageInstagram = new ImageView(PesquisaTimes.getContext());
-            imageInstagram.setLayoutParams(lp);
-            Glide.with(PesquisaTimes.getContext())
-                    .load(R.drawable.instagram).override(150, 150)
-                    .into(imageInstagram);
-            PesquisaTimes.getLinearLayout().addView(imageInstagram);
+            imageInstagram[i].setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    /*
+                    if(lista.get(v.getId()).getStrFacebook().isEmpty())
+                    {
+                        Toast.makeText(PesquisaTimes.getContext(), "This team doesn't contain any information about his facebook!!" , Toast.LENGTH_LONG).show();
+                    }
+                    */
+                    PesquisaTimes.getContext().startActivity(newInstagramIntent("http://" + lista.get(v.getId()).getStrInstagram()));
+                }
+            });
+
+
 
 
 
@@ -372,12 +441,24 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
         try {
             ApplicationInfo applicationInfo = pm.getApplicationInfo("com.facebook.katana", 0);
             if (applicationInfo.enabled) {
-                // http://stackoverflow.com/a/24547437/1048340
                 uri = Uri.parse("fb://facewebmodal/f?href=" + url);
             }
         } catch (PackageManager.NameNotFoundException ignored) {
         }
         return new Intent(Intent.ACTION_VIEW, uri);
+    }
+
+    public  Intent newInstagramIntent(String url) {
+        Uri uri = Uri.parse(url);
+
+        try {
+            Intent instaApp = new Intent(Intent.ACTION_VIEW, uri);
+            instaApp.setPackage("com.instagram.android");
+            return instaApp;
+
+        } catch (ActivityNotFoundException e) {
+            return new Intent(Intent.ACTION_VIEW, uri);
+        }
     }
 
 }
