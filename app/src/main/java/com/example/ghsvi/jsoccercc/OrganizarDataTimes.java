@@ -565,8 +565,6 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
 
             PesquisaTimes.getLinearLayout().addView(view7);
 
-
-        
         }
     }
 
