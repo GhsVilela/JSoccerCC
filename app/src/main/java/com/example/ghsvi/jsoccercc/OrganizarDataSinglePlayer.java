@@ -445,12 +445,6 @@ public class OrganizarDataSinglePlayer extends AsyncTask<Void, String, Void> {
             birthLocationText.setTextColor(ContextCompat.getColor(PesquisaSinglePlayer.getContext(), R.color.AppColor));
             PesquisaSinglePlayer.getLinearLayout().addView(birthLocationText);
 
-            View view11 = new View(PesquisaSinglePlayer.getContext());
-            view11.setLayoutParams(lpView);
-            view11.setBackgroundColor(ContextCompat.getColor(view11.getContext(), R.color.DarkGray));
-
-            PesquisaSinglePlayer.getLinearLayout().addView(view11);
-
             TextView space = new TextView(PesquisaSinglePlayer.getContext());
             space.setText("\n");
             PesquisaSinglePlayer.getLinearLayout().addView(space);
@@ -598,11 +592,11 @@ public class OrganizarDataSinglePlayer extends AsyncTask<Void, String, Void> {
                 }
             });
 
-            View view12 = new View(PesquisaSinglePlayer.getContext());
-            view12.setLayoutParams(lpView);
-            view12.setBackgroundColor(ContextCompat.getColor(view12.getContext(), R.color.DarkGray));
+            View view11 = new View(PesquisaSinglePlayer.getContext());
+            view11.setLayoutParams(lpView);
+            view11.setBackgroundColor(ContextCompat.getColor(view11.getContext(), R.color.DarkGray));
 
-            PesquisaSinglePlayer.getLinearLayout().addView(view12);
+            PesquisaSinglePlayer.getLinearLayout().addView(view11);
         }
     }
 

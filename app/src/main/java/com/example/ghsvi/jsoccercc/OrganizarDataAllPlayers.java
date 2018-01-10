@@ -1,8 +1,12 @@
 package com.example.ghsvi.jsoccercc;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -285,19 +289,19 @@ public class OrganizarDataAllPlayers extends AsyncTask<Void, String, Void> {
 
             PesquisaAllPlayers.getLinearLayout().addView(view3);
 
-            TextView description = new TextView(PesquisaAllPlayers.getContext());
-            description.setText("Description: ");
-            description.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
-            description.setTextSize(20);
-            description.setTypeface(nome.getTypeface(), Typeface.BOLD);
-            description.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
-            PesquisaAllPlayers.getLinearLayout().addView(description);
+            TextView sport = new TextView(PesquisaAllPlayers.getContext());
+            sport.setText("Sport: ");
+            sport.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            sport.setTextSize(20);
+            sport.setTypeface(nome.getTypeface(), Typeface.BOLD);
+            sport.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
+            PesquisaAllPlayers.getLinearLayout().addView(sport);
 
-            TextView descriptionText = new TextView(PesquisaAllPlayers.getContext());
-            descriptionText.setText(lista.get(i).getStrDescriptionEN());
-            descriptionText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
-            descriptionText.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
-            PesquisaAllPlayers.getLinearLayout().addView(descriptionText);
+            TextView sportText = new TextView(PesquisaAllPlayers.getContext());
+            sportText.setText(lista.get(i).getStrSport());
+            sportText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            sportText.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
+            PesquisaAllPlayers.getLinearLayout().addView(sportText);
 
             View view4 = new View(PesquisaAllPlayers.getContext());
             view4.setLayoutParams(lpView);
@@ -305,8 +309,350 @@ public class OrganizarDataAllPlayers extends AsyncTask<Void, String, Void> {
 
             PesquisaAllPlayers.getLinearLayout().addView(view4);
 
+            TextView dateSigned = new TextView(PesquisaAllPlayers.getContext());
+            dateSigned.setText("Date Signed: ");
+            dateSigned.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            dateSigned.setTextSize(20);
+            dateSigned.setTypeface(nome.getTypeface(), Typeface.BOLD);
+            dateSigned.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
+            PesquisaAllPlayers.getLinearLayout().addView(dateSigned);
+
+            TextView dateSignedText = new TextView(PesquisaAllPlayers.getContext());
+            dateSignedText.setText(lista.get(i).getDateSigned());
+            dateSignedText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            dateSignedText.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
+            PesquisaAllPlayers.getLinearLayout().addView(dateSignedText);
+
+            View view5 = new View(PesquisaAllPlayers.getContext());
+            view5.setLayoutParams(lpView);
+            view5.setBackgroundColor(ContextCompat.getColor(view5.getContext(), R.color.DarkGray));
+
+            PesquisaAllPlayers.getLinearLayout().addView(view5);
+
+            TextView position = new TextView(PesquisaAllPlayers.getContext());
+            position.setText("Position: ");
+            position.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            position.setTextSize(20);
+            position.setTypeface(nome.getTypeface(), Typeface.BOLD);
+            position.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
+            PesquisaAllPlayers.getLinearLayout().addView(position);
+
+            TextView positionText = new TextView(PesquisaAllPlayers.getContext());
+            positionText.setText(lista.get(i).getStrPosition());
+            positionText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            positionText.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
+            PesquisaAllPlayers.getLinearLayout().addView(positionText);
+
+            View view6 = new View(PesquisaAllPlayers.getContext());
+            view6.setLayoutParams(lpView);
+            view6.setBackgroundColor(ContextCompat.getColor(view6.getContext(), R.color.DarkGray));
+
+            PesquisaAllPlayers.getLinearLayout().addView(view6);
+
+            TextView gender = new TextView(PesquisaAllPlayers.getContext());
+            gender.setText("Gender: ");
+            gender.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            gender.setTextSize(20);
+            gender.setTypeface(nome.getTypeface(), Typeface.BOLD);
+            gender.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
+            PesquisaAllPlayers.getLinearLayout().addView(gender);
+
+            TextView genderText = new TextView(PesquisaAllPlayers.getContext());
+            genderText.setText(lista.get(i).getStrGender());
+            genderText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            genderText.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
+            PesquisaAllPlayers.getLinearLayout().addView(genderText);
+
+            View view7 = new View(PesquisaAllPlayers.getContext());
+            view7.setLayoutParams(lpView);
+            view7.setBackgroundColor(ContextCompat.getColor(view7.getContext(), R.color.DarkGray));
+
+            PesquisaAllPlayers.getLinearLayout().addView(view7);
+
+            TextView weight = new TextView(PesquisaAllPlayers.getContext());
+            weight.setText("Weight: ");
+            weight.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            weight.setTextSize(20);
+            weight.setTypeface(nome.getTypeface(), Typeface.BOLD);
+            weight.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
+            PesquisaAllPlayers.getLinearLayout().addView(weight);
+
+            TextView weightText = new TextView(PesquisaAllPlayers.getContext());
+            weightText.setText(lista.get(i).getStrWeight());
+            weightText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            weightText.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
+            PesquisaAllPlayers.getLinearLayout().addView(weightText);
+
+            View view8 = new View(PesquisaAllPlayers.getContext());
+            view8.setLayoutParams(lpView);
+            view8.setBackgroundColor(ContextCompat.getColor(view8.getContext(), R.color.DarkGray));
+
+            PesquisaAllPlayers.getLinearLayout().addView(view8);
+
+            TextView height = new TextView(PesquisaAllPlayers.getContext());
+            height.setText("Height: ");
+            height.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            height.setTextSize(20);
+            height.setTypeface(nome.getTypeface(), Typeface.BOLD);
+            height.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
+            PesquisaAllPlayers.getLinearLayout().addView(height);
+
+            TextView heightText = new TextView(PesquisaAllPlayers.getContext());
+            heightText.setText(lista.get(i).getStrHeight());
+            heightText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            heightText.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
+            PesquisaAllPlayers.getLinearLayout().addView(heightText);
+
+            View view9 = new View(PesquisaAllPlayers.getContext());
+            view9.setLayoutParams(lpView);
+            view9.setBackgroundColor(ContextCompat.getColor(view9.getContext(), R.color.DarkGray));
+
+            PesquisaAllPlayers.getLinearLayout().addView(view9);
+
+            TextView dateBorn = new TextView(PesquisaAllPlayers.getContext());
+            dateBorn.setText("Date Born: ");
+            dateBorn.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            dateBorn.setTextSize(20);
+            dateBorn.setTypeface(nome.getTypeface(), Typeface.BOLD);
+            dateBorn.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
+            PesquisaAllPlayers.getLinearLayout().addView(dateBorn);
+
+            TextView dateBornText = new TextView(PesquisaAllPlayers.getContext());
+            dateBornText.setText(lista.get(i).getDateBorn());
+            dateBornText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            dateBornText.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
+            PesquisaAllPlayers.getLinearLayout().addView(dateBornText);
+
+            View view10 = new View(PesquisaAllPlayers.getContext());
+            view10.setLayoutParams(lpView);
+            view10.setBackgroundColor(ContextCompat.getColor(view10.getContext(), R.color.DarkGray));
+
+            PesquisaAllPlayers.getLinearLayout().addView(view10);
+
+            TextView birthLocation = new TextView(PesquisaAllPlayers.getContext());
+            birthLocation.setText("Birth Location: ");
+            birthLocation.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            birthLocation.setTextSize(20);
+            birthLocation.setTypeface(nome.getTypeface(), Typeface.BOLD);
+            birthLocation.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
+            PesquisaAllPlayers.getLinearLayout().addView(birthLocation);
+
+            TextView birthLocationText = new TextView(PesquisaAllPlayers.getContext());
+            birthLocationText.setText(lista.get(i).getStrBirthLocation());
+            birthLocationText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
+            birthLocationText.setTextColor(ContextCompat.getColor(PesquisaAllPlayers.getContext(), R.color.AppColor));
+            PesquisaAllPlayers.getLinearLayout().addView(birthLocationText);
+
+            TextView space = new TextView(PesquisaAllPlayers.getContext());
+            space.setText("\n");
+            PesquisaAllPlayers.getLinearLayout().addView(space);
+
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(60, 60);
+
+            //WebSite
+
+            ImageView[] imageInternet;
+
+            imageInternet = new ImageView[lista.size()];
+            imageInternet[i] = new ImageView(PesquisaAllPlayers.getContext());
+            imageInternet[i].setLayoutParams(lp);
+            Glide.with(PesquisaAllPlayers.getContext())
+                    .load(R.drawable.internet).override(60, 60)
+                    .into(imageInternet[i]);
+            imageInternet[i].setId(i);
+
+            //Facebook
+
+            ImageView[] imageFacebook;
+
+            imageFacebook = new ImageView[lista.size()];
+            imageFacebook[i] = new ImageView(PesquisaAllPlayers.getContext());
+            imageFacebook[i].setLayoutParams(lp);
+            Glide.with(PesquisaAllPlayers.getContext())
+                    .load(R.drawable.facebook).override(60, 60)
+                    .into(imageFacebook[i]);
+            imageFacebook[i].setId(i);
+
+            //Instagram
+
+            ImageView[] imageInstagram;
+
+            imageInstagram = new ImageView[lista.size()];
+            imageInstagram[i] = new ImageView(PesquisaAllPlayers.getContext());
+            imageInstagram[i].setLayoutParams(lp);
+            Glide.with(PesquisaAllPlayers.getContext())
+                    .load(R.drawable.instagram).override(60, 60)
+                    .into(imageInstagram[i]);
+            imageInstagram[i].setId(i);
+
+            //Twitter
+
+            ImageView[] imageTwitter;
+
+            imageTwitter = new ImageView[lista.size()];
+            imageTwitter[i] = new ImageView(PesquisaAllPlayers.getContext());
+            imageTwitter[i].setLayoutParams(lp);
+            Glide.with(PesquisaAllPlayers.getContext())
+                    .load(R.drawable.twitter).override(60, 60)
+                    .into(imageTwitter[i]);
+            imageTwitter[i].setId(i);
+
+            //Youtube
+
+            ImageView[] imageYoutube;
+
+            imageYoutube = new ImageView[lista.size()];
+            imageYoutube[i] = new ImageView(PesquisaAllPlayers.getContext());
+            imageYoutube[i].setLayoutParams(lp);
+            Glide.with(PesquisaAllPlayers.getContext())
+                    .load(R.drawable.youtube).override(60, 60)
+                    .into(imageYoutube[i]);
+            imageYoutube[i].setId(i);
+
+
+            LinearLayout socialNetwork = new LinearLayout(PesquisaAllPlayers.getContext());
+            socialNetwork.setOrientation(LinearLayout.HORIZONTAL);
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+            layoutParams.setMargins(10, 0, 10, 5);
+            //socialNetwork.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+
+            if(!lista.get(i).getStrWebsite().isEmpty() && !lista.get(i).getStrWebsite().equals("null"))
+                socialNetwork.addView(imageInternet[i], layoutParams);
+
+            if(!lista.get(i).getStrFacebook().isEmpty() && !lista.get(i).getStrFacebook().equals("null"))
+                socialNetwork.addView(imageFacebook[i], layoutParams);
+
+            if(!lista.get(i).getStrInstagram().isEmpty() && !lista.get(i).getStrInstagram().equals("null"))
+                socialNetwork.addView(imageInstagram[i], layoutParams);
+
+            if(!lista.get(i).getStrTwitter().isEmpty() && !lista.get(i).getStrTwitter().equals("null"))
+                socialNetwork.addView(imageTwitter[i], layoutParams);
+
+            if(!lista.get(i).getStrYoutube().isEmpty() && !lista.get(i).getStrYoutube().equals("null"))
+                socialNetwork.addView(imageYoutube[i], layoutParams);
+
+            PesquisaAllPlayers.getLinearLayout().addView(socialNetwork, layoutParams);
+
+            imageInternet[i].setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+                    Uri uri = Uri.parse("http://" + lista.get(v.getId()).getStrWebsite());
+
+                    Intent website = new Intent(Intent.ACTION_VIEW, uri);
+
+                    PesquisaAllPlayers.getContext().startActivity(website);
+                }
+            });
+
+
+            imageFacebook[i].setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    /*
+                    if(lista.get(v.getId()).getStrFacebook().isEmpty())
+                    {
+                        Toast.makeText(PesquisaTimes.getContext(), "This team doesn't contain any information about his facebook!!" , Toast.LENGTH_LONG).show();
+                    }
+                    */
+                    PesquisaAllPlayers.getContext().startActivity(newFacebookIntent(PesquisaAllPlayers.getContext().getPackageManager(), "http://" + lista.get(v.getId()).getStrFacebook()));
+                }
+            });
+
+            imageInstagram[i].setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+
+
+                    PesquisaAllPlayers.getContext().startActivity(newInstagramIntent(PesquisaAllPlayers.getContext().getPackageManager(),"http://" + lista.get(v.getId()).getStrInstagram()));
+                }
+            });
+
+            imageTwitter[i].setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+
+
+                    PesquisaAllPlayers.getContext().startActivity(newTwitterIntent(PesquisaAllPlayers.getContext().getPackageManager(), "http://" + lista.get(v.getId()).getStrTwitter()));
+
+                }
+            });
+
+            imageYoutube[i].setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+
+
+                    PesquisaAllPlayers.getContext().startActivity(newYoutubeIntent(PesquisaAllPlayers.getContext().getPackageManager(), "http://" + lista.get(v.getId()).getStrYoutube()));
+
+                }
+            });
+
+            View view11 = new View(PesquisaAllPlayers.getContext());
+            view11.setLayoutParams(lpView);
+            view11.setBackgroundColor(ContextCompat.getColor(view11.getContext(), R.color.DarkGray));
+
+            PesquisaAllPlayers.getLinearLayout().addView(view11);
+
         }
 
+    }
+
+    private Intent newFacebookIntent(PackageManager pm, String url) {
+        Uri uri = Uri.parse(url);
+        try {
+            ApplicationInfo applicationInfo = pm.getApplicationInfo("com.facebook.katana", 0);
+            if (applicationInfo.enabled) {
+                uri = Uri.parse("fb://facewebmodal/f?href=" + url);
+            }
+        } catch (PackageManager.NameNotFoundException ignored) {
+        }
+        return new Intent(Intent.ACTION_VIEW, uri);
+    }
+
+    private  Intent newInstagramIntent(PackageManager pm, String url) {
+        Uri uri = Uri.parse(url);
+
+        try {
+            pm.getPackageInfo("com.instagram.android", 0);
+            Intent instaApp = new Intent(Intent.ACTION_VIEW, uri);
+            instaApp.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            return instaApp;
+
+        } catch (Exception e) {
+            return new Intent(Intent.ACTION_VIEW, uri);
+        }
+    }
+
+    private  Intent newTwitterIntent(PackageManager pm, String url) {
+        Uri uri = Uri.parse(url);
+        try {
+            // get the Twitter app if possible
+            pm.getPackageInfo("com.twitter.android", 0);
+            Intent intentTwitter = new Intent(Intent.ACTION_VIEW, uri);
+            intentTwitter.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            return intentTwitter;
+        } catch (Exception e) {
+            // no Twitter app, revert to browser
+            return new Intent(Intent.ACTION_VIEW, uri);
+        }
+    }
+
+    private  Intent newYoutubeIntent(PackageManager pm, String url) {
+        Uri uri = Uri.parse(url);
+        try {
+            // get the youtube app if possible
+            pm.getPackageInfo("com.youtube.android", 0);
+            Intent intentYoutube;
+            intentYoutube = new Intent(Intent.ACTION_VIEW, uri);
+            //intentYoutube.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            return intentYoutube;
+        } catch (Exception e) {
+            // no Twitter app, revert to browser
+            return new Intent(Intent.ACTION_VIEW, uri);
+        }
     }
 
 }
