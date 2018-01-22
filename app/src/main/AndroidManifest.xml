@@ -27,6 +27,9 @@
         <activity android:name=".InserirPesquisaSingleJogador" />
         <activity android:name=".rss.RssActivity" />
         <activity android:name=".rss.RssTimesActivity" />
+        <activity android:name=".CreditosActivity"/>
+        <activity android:name=".email.EmailActivity" />
+        <activity android:name=".HelpActivity" />
     </application>
 
 </manifest>

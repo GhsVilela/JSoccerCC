@@ -20,6 +20,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.ghsvi.jsoccercc.email.EmailActivity;
+
 /**
  * Created by ghsvi on 29/12/2017.
  */
@@ -125,7 +127,8 @@ public class InserirPesquisaSingleJogador extends AppCompatActivity implements N
         //noinspection SimplifiableIfStatement
         if (id == R.id.reportbugs)
         {
-            return true;
+            Intent it = new Intent(InserirPesquisaSingleJogador.this, EmailActivity.class);
+            startActivity(it);
         }
 
         return super.onOptionsItemSelected(item);

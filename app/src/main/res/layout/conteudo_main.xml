@@ -51,7 +51,7 @@
         tools:layout_editor_absoluteY="245dp" />
 
     <Button
-        android:id="@+id/buttonCreditos"
+        android:id="@+id/buttonCredits"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"

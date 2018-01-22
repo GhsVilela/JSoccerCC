@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:showIn="@layout/app_bar_help"
+    tools:context="com.example.ghsvi.jsoccercc.HelpActivity"
+    android:layout_marginTop="50dp">
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp">
+
+        <TextView
+            android:id="@+id/textWhatItDoes"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="#37474F"
+            android:textSize="20dp"
+            android:text="What this app does? "
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/textWhatItDoes2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#37474F"
+            android:layout_marginTop="10dp"
+
+            android:text="It searches for teams and players, based on the text you type in the text box. It also returns information about social media of the teams and players if available and a few teams also have RSS feed to see the news related to them."/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/AppColor"
+            android:layout_marginTop="10dp"
+            />
+
+        <TextView
+            android:id="@+id/textWhatItDoes3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#37474F"
+            android:layout_marginTop="10dp"
+
+            android:text="The first option from the search menu is the Home Page, you click and go to the Home screen."/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/AppColor"
+            android:layout_marginTop="10dp"
+            />
+        <TextView
+            android:id="@+id/textWhatItDoes4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#37474F"
+            android:layout_marginTop="10dp"
+
+            android:text="The second option is to search for teams, it will return the information related to the text you typed in the text box."/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/AppColor"
+            android:layout_marginTop="10dp"
+            />
+        <TextView
+            android:id="@+id/textWhatItDoes5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#37474F"
+            android:layout_marginTop="10dp"
+
+            android:text="The third option is to search all players from a team, you type the name of the team and it will return all players from that team."/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/AppColor"
+            android:layout_marginTop="10dp"
+            />
+
+        <TextView
+            android:id="@+id/textWhatItDoes6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#37474F"
+            android:layout_marginTop="10dp"
+
+            android:text="The last option is to search for a specific player but if the player you typed have similar or equal name to other players it will return more than one result."/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/AppColor"
+            android:layout_marginTop="10dp"
+            />
+
+        <TextView
+            android:id="@+id/textHowItWorks"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="#37474F"
+            android:textSize="20dp"
+            android:text="How this app works? "
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/textHowItWorks2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#37474F"
+            android:layout_marginTop="10dp"
+            android:text="It uses the database provided by the website TheSportsDB, they have an API that returns information related to sports in general but this app only searches for Soccer. The API returns data in JSON format and this app handle these JSON data, organize them and display the information in the screen in a simple and beautiful way. Another feature is the Feed RSS provided by the API and FIFA Official website."
+            android:layout_marginBottom="10dp"
+            />
+
+    </LinearLayout>
+
+</ScrollView>
+</RelativeLayout>

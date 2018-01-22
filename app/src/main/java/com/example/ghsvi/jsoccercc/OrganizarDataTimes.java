@@ -56,7 +56,15 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
                         .build();
 
                 Response response = client.newCall(request).execute();
-                data = response.body().string();
+
+                if(response.isSuccessful())
+                {
+                    data = response.body().string();
+                }
+                else
+                {
+                    data = "offline";
+                }
 
                 JSONObject jo = new JSONObject(data);
                 JSONArray jsonArray = jo.getJSONArray("teams");
@@ -124,7 +132,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
 
-        if(data.isEmpty())
+        if(data.equals("offline"))
         {
             PesquisaTimes.getmProgressBar().cancel();
             Snackbar.make(PesquisaTimes.getLinearLayout(), "API is Offline, try again later!!", Snackbar.LENGTH_LONG).show();
@@ -201,7 +209,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
 
             TextView nomeText = new TextView(PesquisaTimes.getContext());
 
-            if(lista.get(i).getStrTeam().equals("null"))
+            if(lista.get(i).getStrTeam().equals("null") || lista.get(i).getStrTeam().isEmpty())
             {
                 nomeText.setText("Name is not available");
             }
@@ -230,7 +238,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
 
             TextView leagueText = new TextView(PesquisaTimes.getContext());
 
-            if(lista.get(i).getStrLeague().equals("_No League"))
+            if(lista.get(i).getStrLeague().equals("_No League") || lista.get(i).getStrLeague().equals("null") || lista.get(i).getStrLeague().isEmpty())
             {
                 leagueText.setText("League is not available");
             }
@@ -260,7 +268,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
 
             TextView formedYearText = new TextView(PesquisaTimes.getContext());
 
-            if(lista.get(i).getIntFormedYear().equals("0"))
+            if(lista.get(i).getIntFormedYear().equals("0") || lista.get(i).getIntFormedYear().equals("null") || lista.get(i).getIntFormedYear().isEmpty())
             {
                 formedYearText.setText("Formed Year is not available");
             }
@@ -289,7 +297,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
 
             TextView managerText = new TextView(PesquisaTimes.getContext());
 
-            if (lista.get(i).getStrManager().isEmpty()) {
+            if (lista.get(i).getStrManager().equals("null") || lista.get(i).getStrManager().isEmpty()) {
                 managerText.setText("Manager is not available");
             } else {
                 managerText.setText(lista.get(i).getStrManager());
@@ -315,7 +323,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
 
             TextView estadioText = new TextView(PesquisaTimes.getContext());
 
-            if (lista.get(i).getStrStadium().isEmpty()) {
+            if (lista.get(i).getStrStadium().equals("null") || lista.get(i).getStrStadium().isEmpty()) {
                 estadioText.setText("Stadium is not available");
             } else {
                 estadioText.setText(lista.get(i).getStrStadium());
@@ -341,7 +349,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
 
             TextView countryText = new TextView(PesquisaTimes.getContext());
 
-            if(lista.get(i).getStrCountry().equals("null"))
+            if(lista.get(i).getStrCountry().equals("null") || lista.get(i).getStrCountry().isEmpty())
             {
                 countryText.setText("Country is not available");
             }
@@ -369,7 +377,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
             PesquisaTimes.getLinearLayout().addView(descricao);
 
             TextView descricaoText = new TextView(PesquisaTimes.getContext());
-            if (lista.get(i).getStrDescriptionEN().equals("null")){
+            if (lista.get(i).getStrDescriptionEN().equals("null") || lista.get(i).getStrDescriptionEN().isEmpty()){
                 descricaoText.setText("Description is not available");
             } else {
                 descricaoText.setText(lista.get(i).getStrDescriptionEN());

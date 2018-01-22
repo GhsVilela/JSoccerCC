@@ -15,7 +15,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.example.ghsvi.jsoccercc.email.EmailActivity;
 import com.example.ghsvi.jsoccercc.rss.RssActivity;
 
 
@@ -27,6 +29,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public  NavigationView mNavigationView;
     public  Handler handler;
     public  Button buttonRss;
+    public  Button buttonCredits;
+    public  Button buttonHelp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +63,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     startActivity(launchActivity);
             }
         });
+
+        buttonCredits = (Button) findViewById(R.id.buttonCredits);
+
+        buttonCredits.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent launchActivity = new Intent(MainActivity.this, CreditosActivity.class);
+                startActivity(launchActivity);
+            }
+        });
+
+        buttonHelp = (Button) findViewById(R.id.buttonHelp);
+
+        buttonHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent launchActivity = new Intent(MainActivity.this, HelpActivity.class);
+                startActivity(launchActivity);
+            }
+        });
     }
 
     @Override
@@ -89,7 +113,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //noinspection SimplifiableIfStatement
         if (id == R.id.reportbugs)
         {
-            return true;
+            Intent it = new Intent(MainActivity.this, EmailActivity.class);
+            startActivity(it);
         }
 
         return super.onOptionsItemSelected(item);

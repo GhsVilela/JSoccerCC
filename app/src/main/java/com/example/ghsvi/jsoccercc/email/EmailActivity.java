@@ -1,9 +1,6 @@
-package com.example.ghsvi.jsoccercc;
+package com.example.ghsvi.jsoccercc.email;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -18,36 +15,44 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.example.ghsvi.jsoccercc.email.EmailActivity;
+import com.example.ghsvi.jsoccercc.CreditosActivity;
+import com.example.ghsvi.jsoccercc.InserirPesquisaAllJogadores;
+import com.example.ghsvi.jsoccercc.InserirPesquisaSingleJogador;
+import com.example.ghsvi.jsoccercc.InserirPesquisaTimes;
+import com.example.ghsvi.jsoccercc.MainActivity;
+import com.example.ghsvi.jsoccercc.R;
 
 /**
- * Created by ghsvi on 29/12/2017.
+ * Created by ghsvi on 15/01/2018.
  */
 
-public class InserirPesquisaAllJogadores extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class EmailActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-    Button pesquisar;
-    static EditText allPlayers;
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
     public Toolbar toolbar;
     public NavigationView mNavigationView;
     public Handler handler;
 
+    //Declaring EditText
+    private EditText editTextEmail;
+    private EditText editTextSubject;
+    private EditText editTextMessage;
+
+    //Send button
+    private Button buttonSend;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.inserir_pesquisa_all_jogadores);
-
-        pesquisar = (Button) findViewById(R.id.buttonAllPlayers);
-        allPlayers = (EditText) findViewById(R.id.editTextAllPlayers);
+        setContentView(R.layout.activity_email);
 
         handler = new Handler(Looper.getMainLooper());
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Search for all players");
+        toolbar.setTitle("Report Bugs");
         setSupportActionBar(toolbar);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -61,42 +66,37 @@ public class InserirPesquisaAllJogadores extends AppCompatActivity implements Na
         mNavigationView = (NavigationView) findViewById(R.id.nav_menu);
         mNavigationView.setNavigationItemSelectedListener(this);
 
-        pesquisar.setOnClickListener(new View.OnClickListener() {
+        editTextEmail = (EditText) findViewById(R.id.editTextEmail);
+        editTextEmail.setText("ghsvilela@gmail.com");
+        editTextEmail.setFocusable(false);
+        editTextEmail.setClickable(true);
+        editTextSubject = (EditText) findViewById(R.id.editTextSubject);
+        editTextMessage = (EditText) findViewById(R.id.editTextMessage);
+
+        buttonSend = (Button) findViewById(R.id.buttonSend);
+
+        //Adding click listener
+        buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int testConnection = checkConnectivity();
-
-                if(allPlayers.getText().toString().isEmpty())
-                {
-                    Toast.makeText(getApplicationContext(), "This field can't be empty!!", Toast.LENGTH_LONG).show();
-                }
-
-                else if(testConnection == 1 && !allPlayers.getText().toString().isEmpty()){
-                    Intent launchActivity = new Intent(InserirPesquisaAllJogadores.this, PesquisaAllPlayers.class);
-                    startActivity(launchActivity);
-
-                }
+                sendEmail();
             }
         });
 
+
     }
 
-    private int checkConnectivity() {
-        boolean enabled = true;
-        int internet;
+    private void sendEmail() {
+        //Getting content for email
+        String email = editTextEmail.getText().toString().trim();
+        String subject = editTextSubject.getText().toString().trim();
+        String message = editTextMessage.getText().toString().trim();
 
-        ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+        //Creating SendMail object
+        SendEmail sm = new SendEmail(this, email, subject, message);
 
-        if ((info == null || !info.isConnected() || !info.isAvailable())) {
-            internet = 0;//not connected
-            Toast.makeText(getApplicationContext(), "Please connect to the internet first!!", Toast.LENGTH_LONG).show();
-            enabled = false;
-        } else {
-            internet = 1;//connected
-        }
-
-        return internet;
+        //Executing sendmail to send email
+        sm.execute();
     }
 
     @Override
@@ -127,7 +127,7 @@ public class InserirPesquisaAllJogadores extends AppCompatActivity implements Na
         //noinspection SimplifiableIfStatement
         if (id == R.id.reportbugs)
         {
-            Intent it = new Intent(InserirPesquisaAllJogadores.this, EmailActivity.class);
+            Intent it = new Intent(EmailActivity.this, EmailActivity.class);
             startActivity(it);
         }
 
@@ -144,22 +144,22 @@ public class InserirPesquisaAllJogadores extends AppCompatActivity implements Na
                 switch (item.getItemId()){
 
                     case(R.id.home):
-                        Intent it = new Intent(InserirPesquisaAllJogadores.this, MainActivity.class);
+                        Intent it = new Intent(EmailActivity.this, MainActivity.class);
                         startActivity(it);
                         break;
 
                     case (R.id.search_team):
-                        Intent it2 = new Intent(InserirPesquisaAllJogadores.this, InserirPesquisaTimes.class);
+                        Intent it2 = new Intent(EmailActivity.this, InserirPesquisaTimes.class);
                         startActivity(it2);
                         break;
 
                     case (R.id.search_all_players):
-                        Intent it3 = new Intent(InserirPesquisaAllJogadores.this, InserirPesquisaAllJogadores.class);
+                        Intent it3 = new Intent(EmailActivity.this, InserirPesquisaAllJogadores.class);
                         startActivity(it3);
                         break;
 
                     case (R.id.search_player_by_name):
-                        Intent it4 = new Intent(InserirPesquisaAllJogadores.this, InserirPesquisaSingleJogador.class);
+                        Intent it4 = new Intent(EmailActivity.this, InserirPesquisaSingleJogador.class);
                         startActivity(it4);
                         break;
                 }
@@ -171,5 +171,4 @@ public class InserirPesquisaAllJogadores extends AppCompatActivity implements Na
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 }

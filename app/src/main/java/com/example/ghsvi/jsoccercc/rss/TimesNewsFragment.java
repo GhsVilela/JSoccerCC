@@ -15,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.ghsvi.jsoccercc.InserirPesquisaSingleJogador;
+import com.example.ghsvi.jsoccercc.InserirPesquisaTimes;
 import com.example.ghsvi.jsoccercc.R;
 
 import org.xmlpull.v1.XmlPullParserException;
@@ -24,6 +26,10 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by ghsvi on 08/01/2018.
@@ -104,7 +110,7 @@ public class TimesNewsFragment extends Fragment {
             else
             {
                 Log.e("OnPostExecute", "ArrayList Is Null");
-                Snackbar.make(getView(), "No Connection Was Made. Check Your Internet Connection!!", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(getView(), "No connection was made. You may be Offline or the Feed RSS for this team isn't available", Snackbar.LENGTH_INDEFINITE).show();
             }
         }
 
@@ -124,20 +130,18 @@ public class TimesNewsFragment extends Fragment {
                 inputStream.close();
             }
         }
-
     }
 
     private InputStream downloadUrl(String urlString) throws IOException {
 
-        URL url = new URL(urlString);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        HttpURLConnection.setFollowRedirects(false);
-        connection.setConnectTimeout(15 * 1000);
-        connection.setRequestMethod("GET");
-        connection.setRequestProperty("User-Agent","Mozilla/5.0 ( compatible ) ");
-        connection.setRequestProperty("Accept","*/*");
-        connection.connect();
-        InputStream inputStream = connection.getInputStream();
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder().url(urlString).build();
+
+        Response response = client.newCall(request).execute();
+
+        InputStream inputStream = response.body().byteStream();
+
         return inputStream;
     }
 

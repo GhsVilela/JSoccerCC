@@ -16,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 
+import com.example.ghsvi.jsoccercc.email.EmailActivity;
+
 /**
  * Created by ghsvi on 29/12/2017.
  */
@@ -107,7 +109,8 @@ public class PesquisaSinglePlayer extends AppCompatActivity implements Navigatio
         //noinspection SimplifiableIfStatement
         if (id == R.id.reportbugs)
         {
-            return true;
+            Intent it = new Intent(PesquisaSinglePlayer.this, EmailActivity.class);
+            startActivity(it);
         }
 
         return super.onOptionsItemSelected(item);

@@ -4,4 +4,11 @@
     <string name="close">Close</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="txtCreditsIconAuthor"><a href="http://www.freepik.com">Freepik</a></string>
+    <string name="txtCreditsIconSite"><a href="http://www.flaticon.com">www.flaticon.com</a></string>
+    <string name="txtCreditsIconCompl"><a href="http://creativecommons.org/licenses/by/3.0/">CC 3.0 BY</a></string>
+
+    <string name="txtSportsDB"><a href="http://www.thesportsdb.com/">WebSite</a></string>
 </resources>
+

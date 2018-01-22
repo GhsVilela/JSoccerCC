@@ -61,7 +61,15 @@ public class OrganizarDataSinglePlayer extends AsyncTask<Void, String, Void> {
                     .build();
 
             Response response = client.newCall(request).execute();
-            data = response.body().string();
+
+            if(response.isSuccessful())
+            {
+                data = response.body().string();
+            }
+            else
+            {
+                data = "offline";
+            }
 
             JSONObject jo = new JSONObject(data);
             JSONArray jsonArray = jo.getJSONArray("player");
@@ -128,7 +136,7 @@ public class OrganizarDataSinglePlayer extends AsyncTask<Void, String, Void> {
         super.onPostExecute(aVoid);
 
 
-        if(data.isEmpty())
+        if(data.equals("offline"))
         {
             PesquisaSinglePlayer.getmProgressBar().cancel();
             Snackbar.make(PesquisaSinglePlayer.getLinearLayout(), "API is Offline, try again later!!", Snackbar.LENGTH_LONG).show();
@@ -240,7 +248,16 @@ public class OrganizarDataSinglePlayer extends AsyncTask<Void, String, Void> {
             PesquisaSinglePlayer.getLinearLayout().addView(nome);
 
             TextView nomeText = new TextView(PesquisaSinglePlayer.getContext());
-            nomeText.setText(lista.get(i).getStrPlayer());
+
+            if(lista.get(i).getStrPlayer().equals("null") || lista.get(i).getStrPlayer().isEmpty())
+            {
+                nomeText.setText("Name is not available");
+            }
+            else
+            {
+                nomeText.setText(lista.get(i).getStrPlayer());
+            }
+
             nomeText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             nomeText.setTextColor(ContextCompat.getColor(PesquisaSinglePlayer.getContext(), R.color.AppColor));
             PesquisaSinglePlayer.getLinearLayout().addView(nomeText);
@@ -260,7 +277,16 @@ public class OrganizarDataSinglePlayer extends AsyncTask<Void, String, Void> {
             PesquisaSinglePlayer.getLinearLayout().addView(nationality);
 
             TextView nationalityText = new TextView(PesquisaSinglePlayer.getContext());
-            nationalityText.setText(lista.get(i).getStrNationality());
+
+            if(lista.get(i).getStrNationality().equals("null") || lista.get(i).getStrNationality().isEmpty())
+            {
+                nationalityText.setText("Nationality is not available");
+            }
+            else
+            {
+                nationalityText.setText(lista.get(i).getStrNationality());
+            }
+
             nationalityText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             nationalityText.setTextColor(ContextCompat.getColor(PesquisaSinglePlayer.getContext(), R.color.AppColor));
             PesquisaSinglePlayer.getLinearLayout().addView(nationalityText);
@@ -280,7 +306,21 @@ public class OrganizarDataSinglePlayer extends AsyncTask<Void, String, Void> {
             PesquisaSinglePlayer.getLinearLayout().addView(team);
 
             TextView teamText = new TextView(PesquisaSinglePlayer.getContext());
-            teamText.setText(lista.get(i).getStrTeam());
+
+            if(lista.get(i).getStrTeam().equals("null") || lista.get(i).getStrTeam().isEmpty())
+            {
+                teamText.setText("Team is not available");
+            }
+            else if(lista.get(i).getStrTeam().equals("_Retired Soccer"))
+            {
+                teamText.setText("Retired Soccer");
+            }
+            else
+            {
+                teamText.setText(lista.get(i).getStrTeam());
+            }
+
+
             teamText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             teamText.setTextColor(ContextCompat.getColor(PesquisaSinglePlayer.getContext(), R.color.AppColor));
             PesquisaSinglePlayer.getLinearLayout().addView(teamText);
@@ -300,7 +340,17 @@ public class OrganizarDataSinglePlayer extends AsyncTask<Void, String, Void> {
             PesquisaSinglePlayer.getLinearLayout().addView(sport);
 
             TextView sportText = new TextView(PesquisaSinglePlayer.getContext());
-            sportText.setText(lista.get(i).getStrSport());
+
+            if(lista.get(i).getStrSport().equals("null") || lista.get(i).getStrSport().isEmpty())
+            {
+                sportText.setText("Sport is not available");
+            }
+            else
+            {
+                sportText.setText(lista.get(i).getStrSport());
+            }
+
+
             sportText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             sportText.setTextColor(ContextCompat.getColor(PesquisaSinglePlayer.getContext(), R.color.AppColor));
             PesquisaSinglePlayer.getLinearLayout().addView(sportText);
@@ -320,7 +370,16 @@ public class OrganizarDataSinglePlayer extends AsyncTask<Void, String, Void> {
             PesquisaSinglePlayer.getLinearLayout().addView(dateSigned);
 
             TextView dateSignedText = new TextView(PesquisaSinglePlayer.getContext());
-            dateSignedText.setText(lista.get(i).getDateSigned());
+
+            if(lista.get(i).getDateSigned().equals("null") || lista.get(i).getDateSigned().isEmpty())
+            {
+                dateSignedText.setText("Date Signed is not available");
+            }
+            else
+            {
+                dateSignedText.setText(lista.get(i).getDateSigned());
+            }
+
             dateSignedText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             dateSignedText.setTextColor(ContextCompat.getColor(PesquisaSinglePlayer.getContext(), R.color.AppColor));
             PesquisaSinglePlayer.getLinearLayout().addView(dateSignedText);
@@ -340,7 +399,16 @@ public class OrganizarDataSinglePlayer extends AsyncTask<Void, String, Void> {
             PesquisaSinglePlayer.getLinearLayout().addView(position);
 
             TextView positionText = new TextView(PesquisaSinglePlayer.getContext());
-            positionText.setText(lista.get(i).getStrPosition());
+
+            if(lista.get(i).getStrPosition().equals("null") || lista.get(i).getStrPosition().isEmpty())
+            {
+                positionText.setText("Position is not available");
+            }
+            else
+            {
+                positionText.setText(lista.get(i).getStrPosition());
+            }
+
             positionText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             positionText.setTextColor(ContextCompat.getColor(PesquisaSinglePlayer.getContext(), R.color.AppColor));
             PesquisaSinglePlayer.getLinearLayout().addView(positionText);
@@ -360,7 +428,16 @@ public class OrganizarDataSinglePlayer extends AsyncTask<Void, String, Void> {
             PesquisaSinglePlayer.getLinearLayout().addView(gender);
 
             TextView genderText = new TextView(PesquisaSinglePlayer.getContext());
-            genderText.setText(lista.get(i).getStrGender());
+
+            if(lista.get(i).getStrGender().equals("null") || lista.get(i).getStrGender().isEmpty())
+            {
+                genderText.setText("Gender is not available");
+            }
+            else
+            {
+                genderText.setText(lista.get(i).getStrGender());
+            }
+
             genderText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             genderText.setTextColor(ContextCompat.getColor(PesquisaSinglePlayer.getContext(), R.color.AppColor));
             PesquisaSinglePlayer.getLinearLayout().addView(genderText);
@@ -380,7 +457,16 @@ public class OrganizarDataSinglePlayer extends AsyncTask<Void, String, Void> {
             PesquisaSinglePlayer.getLinearLayout().addView(weight);
 
             TextView weightText = new TextView(PesquisaSinglePlayer.getContext());
-            weightText.setText(lista.get(i).getStrWeight());
+
+            if(lista.get(i).getStrWeight().equals("0") || lista.get(i).getStrWeight().equals("null") || lista.get(i).getStrWeight().isEmpty())
+            {
+                weightText.setText("Weight is not available");
+            }
+            else
+            {
+                weightText.setText(lista.get(i).getStrWeight());
+            }
+
             weightText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             weightText.setTextColor(ContextCompat.getColor(PesquisaSinglePlayer.getContext(), R.color.AppColor));
             PesquisaSinglePlayer.getLinearLayout().addView(weightText);
@@ -400,7 +486,16 @@ public class OrganizarDataSinglePlayer extends AsyncTask<Void, String, Void> {
             PesquisaSinglePlayer.getLinearLayout().addView(height);
 
             TextView heightText = new TextView(PesquisaSinglePlayer.getContext());
-            heightText.setText(lista.get(i).getStrHeight());
+
+            if(lista.get(i).getStrHeight().equals("0") || lista.get(i).getStrHeight().equals("null") || lista.get(i).getStrHeight().isEmpty())
+            {
+                heightText.setText("Height is not available");
+            }
+            else
+            {
+                heightText.setText(lista.get(i).getStrHeight());
+            }
+
             heightText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             heightText.setTextColor(ContextCompat.getColor(PesquisaSinglePlayer.getContext(), R.color.AppColor));
             PesquisaSinglePlayer.getLinearLayout().addView(heightText);
@@ -420,7 +515,16 @@ public class OrganizarDataSinglePlayer extends AsyncTask<Void, String, Void> {
             PesquisaSinglePlayer.getLinearLayout().addView(dateBorn);
 
             TextView dateBornText = new TextView(PesquisaSinglePlayer.getContext());
-            dateBornText.setText(lista.get(i).getDateBorn());
+
+            if(lista.get(i).getDateBorn().equals("null") || lista.get(i).getDateBorn().isEmpty())
+            {
+                dateBornText.setText("Date Born is not available");
+            }
+            else
+            {
+                dateBornText.setText(lista.get(i).getDateBorn());
+            }
+
             dateBornText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             dateBornText.setTextColor(ContextCompat.getColor(PesquisaSinglePlayer.getContext(), R.color.AppColor));
             PesquisaSinglePlayer.getLinearLayout().addView(dateBornText);
@@ -440,7 +544,16 @@ public class OrganizarDataSinglePlayer extends AsyncTask<Void, String, Void> {
             PesquisaSinglePlayer.getLinearLayout().addView(birthLocation);
 
             TextView birthLocationText = new TextView(PesquisaSinglePlayer.getContext());
-            birthLocationText.setText(lista.get(i).getStrBirthLocation());
+
+            if(lista.get(i).getStrBirthLocation().equals("null") || lista.get(i).getStrBirthLocation().isEmpty())
+            {
+                birthLocationText.setText("Birth Location is not available");
+            }
+            else
+            {
+                birthLocationText.setText(lista.get(i).getStrBirthLocation());
+            }
+
             birthLocationText.setTextAlignment(View.TEXT_ALIGNMENT_INHERIT);
             birthLocationText.setTextColor(ContextCompat.getColor(PesquisaSinglePlayer.getContext(), R.color.AppColor));
             PesquisaSinglePlayer.getLinearLayout().addView(birthLocationText);

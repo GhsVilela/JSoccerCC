@@ -2,9 +2,7 @@ package com.example.ghsvi.jsoccercc;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Bundle;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.design.widget.NavigationView;
@@ -12,42 +10,39 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.example.ghsvi.jsoccercc.email.EmailActivity;
+import com.example.ghsvi.jsoccercc.rss.RssActivity;
 
-/**
- * Created by ghsvi on 29/12/2017.
- */
+public class CreditosActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-public class InserirPesquisaAllJogadores extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
-
-    Button pesquisar;
-    static EditText allPlayers;
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
     public Toolbar toolbar;
     public NavigationView mNavigationView;
     public Handler handler;
+    public  TextView iconLink1;
+    public  TextView iconLink2;
+    public  TextView iconLink3;
+    public Context context;
+    public TextView theSportsDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.inserir_pesquisa_all_jogadores);
-
-        pesquisar = (Button) findViewById(R.id.buttonAllPlayers);
-        allPlayers = (EditText) findViewById(R.id.editTextAllPlayers);
+        setContentView(R.layout.activity_creditos);
 
         handler = new Handler(Looper.getMainLooper());
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Search for all players");
+        toolbar.setTitle("Credits");
         setSupportActionBar(toolbar);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -61,42 +56,60 @@ public class InserirPesquisaAllJogadores extends AppCompatActivity implements Na
         mNavigationView = (NavigationView) findViewById(R.id.nav_menu);
         mNavigationView.setNavigationItemSelectedListener(this);
 
-        pesquisar.setOnClickListener(new View.OnClickListener() {
+        context = getApplicationContext();
+
+        iconLink1 = (TextView) findViewById(R.id.textCredits2);
+
+        iconLink1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int testConnection = checkConnectivity();
+                Uri uri = Uri.parse("http://www.freepik.com");
 
-                if(allPlayers.getText().toString().isEmpty())
-                {
-                    Toast.makeText(getApplicationContext(), "This field can't be empty!!", Toast.LENGTH_LONG).show();
-                }
+                Intent website = new Intent(Intent.ACTION_VIEW, uri);
 
-                else if(testConnection == 1 && !allPlayers.getText().toString().isEmpty()){
-                    Intent launchActivity = new Intent(InserirPesquisaAllJogadores.this, PesquisaAllPlayers.class);
-                    startActivity(launchActivity);
-
-                }
+                context.startActivity(website);
             }
         });
 
-    }
+        iconLink2 = (TextView) findViewById(R.id.textCredits3);
 
-    private int checkConnectivity() {
-        boolean enabled = true;
-        int internet;
+        iconLink2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse("http://www.flaticon.com");
 
-        ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+                Intent website = new Intent(Intent.ACTION_VIEW, uri);
 
-        if ((info == null || !info.isConnected() || !info.isAvailable())) {
-            internet = 0;//not connected
-            Toast.makeText(getApplicationContext(), "Please connect to the internet first!!", Toast.LENGTH_LONG).show();
-            enabled = false;
-        } else {
-            internet = 1;//connected
-        }
+                context.startActivity(website);
+            }
+        });
 
-        return internet;
+        iconLink3 = (TextView) findViewById(R.id.textCredits4);
+
+        iconLink3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse("http://creativecommons.org/licenses/by/3.0/");
+
+                Intent website = new Intent(Intent.ACTION_VIEW, uri);
+
+                context.startActivity(website);
+            }
+        });
+
+
+        theSportsDB = (TextView) findViewById(R.id.textTheSportsDB2);
+
+        theSportsDB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse("http://www.thesportsdb.com/");
+
+                Intent website = new Intent(Intent.ACTION_VIEW, uri);
+
+                context.startActivity(website);
+            }
+        });
     }
 
     @Override
@@ -127,7 +140,7 @@ public class InserirPesquisaAllJogadores extends AppCompatActivity implements Na
         //noinspection SimplifiableIfStatement
         if (id == R.id.reportbugs)
         {
-            Intent it = new Intent(InserirPesquisaAllJogadores.this, EmailActivity.class);
+            Intent it = new Intent(CreditosActivity.this, EmailActivity.class);
             startActivity(it);
         }
 
@@ -144,22 +157,22 @@ public class InserirPesquisaAllJogadores extends AppCompatActivity implements Na
                 switch (item.getItemId()){
 
                     case(R.id.home):
-                        Intent it = new Intent(InserirPesquisaAllJogadores.this, MainActivity.class);
+                        Intent it = new Intent(CreditosActivity.this, MainActivity.class);
                         startActivity(it);
                         break;
 
                     case (R.id.search_team):
-                        Intent it2 = new Intent(InserirPesquisaAllJogadores.this, InserirPesquisaTimes.class);
+                        Intent it2 = new Intent(CreditosActivity.this, InserirPesquisaTimes.class);
                         startActivity(it2);
                         break;
 
                     case (R.id.search_all_players):
-                        Intent it3 = new Intent(InserirPesquisaAllJogadores.this, InserirPesquisaAllJogadores.class);
+                        Intent it3 = new Intent(CreditosActivity.this, InserirPesquisaAllJogadores.class);
                         startActivity(it3);
                         break;
 
                     case (R.id.search_player_by_name):
-                        Intent it4 = new Intent(InserirPesquisaAllJogadores.this, InserirPesquisaSingleJogador.class);
+                        Intent it4 = new Intent(CreditosActivity.this, InserirPesquisaSingleJogador.class);
                         startActivity(it4);
                         break;
                 }
@@ -171,5 +184,4 @@ public class InserirPesquisaAllJogadores extends AppCompatActivity implements Na
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 }

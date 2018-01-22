@@ -24,6 +24,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -125,15 +129,14 @@ public class LatestNewsFragment extends Fragment {
 
     private InputStream downloadUrl(String urlString) throws IOException {
 
-        URL url = new URL(urlString);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        HttpURLConnection.setFollowRedirects(false);
-        connection.setConnectTimeout(15 * 1000);
-        connection.setRequestMethod("GET");
-        connection.setRequestProperty("User-Agent","Mozilla/5.0 ( compatible ) ");
-        connection.setRequestProperty("Accept","*/*");
-        connection.connect();
-        InputStream inputStream = connection.getInputStream();
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder().url(urlString).build();
+
+        Response response = client.newCall(request).execute();
+
+        InputStream inputStream = response.body().byteStream();
+
         return inputStream;
     }
 

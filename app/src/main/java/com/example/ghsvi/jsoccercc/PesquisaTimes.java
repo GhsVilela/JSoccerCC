@@ -16,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 
+import com.example.ghsvi.jsoccercc.email.EmailActivity;
+
 public class PesquisaTimes extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     //public Button click;
@@ -110,7 +112,8 @@ public class PesquisaTimes extends AppCompatActivity implements NavigationView.O
         //noinspection SimplifiableIfStatement
         if (id == R.id.reportbugs)
         {
-            return true;
+            Intent it = new Intent(PesquisaTimes.this, EmailActivity.class);
+            startActivity(it);
         }
 
         return super.onOptionsItemSelected(item);

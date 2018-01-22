@@ -20,6 +20,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.ghsvi.jsoccercc.email.EmailActivity;
+
 public class InserirPesquisaTimes extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Button pesquisar;
@@ -121,7 +123,8 @@ public class InserirPesquisaTimes extends AppCompatActivity implements Navigatio
         //noinspection SimplifiableIfStatement
         if (id == R.id.reportbugs)
         {
-            return true;
+            Intent it = new Intent(InserirPesquisaTimes.this, EmailActivity.class);
+            startActivity(it);
         }
 
         return super.onOptionsItemSelected(item);
