@@ -24,6 +24,7 @@ import com.example.ghsvi.jsoccercc.InserirPesquisaSingleJogador;
 import com.example.ghsvi.jsoccercc.InserirPesquisaTimes;
 import com.example.ghsvi.jsoccercc.MainActivity;
 import com.example.ghsvi.jsoccercc.R;
+import com.example.ghsvi.jsoccercc.email.EmailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,7 +136,8 @@ public class RssTimesActivity extends AppCompatActivity implements NavigationVie
         //noinspection SimplifiableIfStatement
         if (id == R.id.reportbugs)
         {
-            return true;
+            Intent it = new Intent(RssTimesActivity.this, EmailActivity.class);
+            startActivity(it);
         }
 
         return super.onOptionsItemSelected(item);
