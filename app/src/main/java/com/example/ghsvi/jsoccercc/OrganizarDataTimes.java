@@ -52,7 +52,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()
-                        .url("http://www.thesportsdb.com/api/v1/json/1/searchteams.php?t=" + InserirPesquisaTimes.time.getText())
+                        .url("http://www.thesportsdb.com/api/v1/json/4012833/searchteams.php?t=" + InserirPesquisaTimes.time.getText())
                         .build();
 
                 Response response = client.newCall(request).execute();

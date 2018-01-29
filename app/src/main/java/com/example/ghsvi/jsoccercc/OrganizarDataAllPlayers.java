@@ -56,7 +56,7 @@ public class OrganizarDataAllPlayers extends AsyncTask<Void, String, Void> {
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-                    .url("http://www.thesportsdb.com/api/v1/json/1/searchplayers.php?t=" + InserirPesquisaAllJogadores.allPlayers.getText())
+                    .url("http://www.thesportsdb.com/api/v1/json/4012833/searchplayers.php?t=" + InserirPesquisaAllJogadores.allPlayers.getText())
                     .build();
 
             Response response = client.newCall(request).execute();

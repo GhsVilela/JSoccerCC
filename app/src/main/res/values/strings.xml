@@ -10,5 +10,17 @@
     <string name="txtCreditsIconCompl"><a href="http://creativecommons.org/licenses/by/3.0/">CC 3.0 BY</a></string>
 
     <string name="txtSportsDB"><a href="http://www.thesportsdb.com/">WebSite</a></string>
+
+
+
+    <string name="txtWhatItDoes1">What this app does?</string>
+    <string name="txtWhatItDoes2">It searches for teams and players, based on the text you type in the text box. It also returns information about social media of the teams and players if available and a few teams also have RSS feed to see the news related to them.</string>
+    <string name="txtWhatItDoes3">The first option from the search menu is the Home Page, you click and go to the Home screen.</string>
+    <string name="txtWhatItDoes4">The second option is to search for teams, it will return the information related to the text you typed in the text box.</string>
+    <string name="txtWhatItDoes5">The third option is to search all players from a team, you type the name of the team and it will return all players from that team.</string>
+    <string name="txtWhatItDoes6">The last option is to search for a specific player but if the player you typed have similar or equal name to other players it will return more than one result.</string>
+
+    <string name="txtHowItWorks1">How this app works?</string>
+    <string name="txtHowItWorks2">It uses the database provided by the website TheSportsDB, they have an API that returns information related to sports in general but this app only searches for Soccer. The API returns data in JSON format and this app handle these JSON data, organize them and display the information in the screen in a simple and beautiful way. Another feature is the Feed RSS provided by the API and FIFA Official website.</string>
 </resources>
 
