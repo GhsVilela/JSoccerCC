@@ -9,7 +9,7 @@
     android:id="@+id/linearLayoutInserir"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_inserir_pesquisa_times"
-    tools:context="com.example.ghsvi.jsoccercc.InserirPesquisaTimes">
+    tools:context="com.soccer.ghsvi.jsoccercc.InserirPesquisaTimes">
 
     <TextView
         android:id="@+id/textView2"

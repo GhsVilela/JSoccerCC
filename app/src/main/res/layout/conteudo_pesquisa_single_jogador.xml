@@ -6,7 +6,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_pesquisa_single_jogador"
-    tools:context="com.example.ghsvi.jsoccercc.PesquisaSinglePlayer">
+    tools:context="com.soccer.ghsvi.jsoccercc.PesquisaSinglePlayer">
 
     <ScrollView
         android:id="@+id/scrollView1"

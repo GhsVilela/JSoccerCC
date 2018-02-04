@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ghsvi.jsoccercc">
+    package="com.soccer.ghsvi.jsoccercc">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,24 +13,24 @@
         android:roundIcon="@mipmap/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.soccer.ghsvi.jsoccercc.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PesquisaTimes" />
-        <activity android:name=".PesquisaAllPlayers" />
-        <activity android:name=".PesquisaSinglePlayer" />
-        <activity android:name=".InserirPesquisaTimes" />
-        <activity android:name=".InserirPesquisaAllJogadores" />
-        <activity android:name=".InserirPesquisaSingleJogador" />
-        <activity android:name=".rss.RssActivity" />
-        <activity android:name=".rss.RssTimesActivity" />
-        <activity android:name=".CreditosActivity"/>
-        <activity android:name=".email.EmailActivity" />
-        <activity android:name=".HelpActivity" />
+        <activity android:name="com.soccer.ghsvi.jsoccercc.PesquisaTimes" />
+        <activity android:name="com.soccer.ghsvi.jsoccercc.PesquisaAllPlayers" />
+        <activity android:name="com.soccer.ghsvi.jsoccercc.PesquisaSinglePlayer" />
+        <activity android:name="com.soccer.ghsvi.jsoccercc.InserirPesquisaTimes" />
+        <activity android:name="com.soccer.ghsvi.jsoccercc.InserirPesquisaAllJogadores" />
+        <activity android:name="com.soccer.ghsvi.jsoccercc.InserirPesquisaSingleJogador" />
+        <activity android:name="com.soccer.ghsvi.jsoccercc.rss.RssActivity" />
+        <activity android:name="com.soccer.ghsvi.jsoccercc.rss.RssTimesActivity" />
+        <activity android:name="com.soccer.ghsvi.jsoccercc.CreditosActivity"/>
+        <activity android:name="com.soccer.ghsvi.jsoccercc.email.EmailActivity" />
+        <activity android:name="com.soccer.ghsvi.jsoccercc.HelpActivity" />
     </application>
 
 </manifest>

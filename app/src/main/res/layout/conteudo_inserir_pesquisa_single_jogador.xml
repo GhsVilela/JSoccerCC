@@ -9,7 +9,7 @@
     android:id="@+id/linearLayoutInserir"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_inserir_pesquisa_single_jogador"
-    tools:context="com.example.ghsvi.jsoccercc.InserirPesquisaSingleJogador">
+    tools:context="com.soccer.ghsvi.jsoccercc.InserirPesquisaSingleJogador">
 
     <TextView
         android:id="@+id/textViewSinglePlayer"

@@ -6,7 +6,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main"
-    tools:context="com.example.ghsvi.jsoccercc.MainActivity">
+    tools:context="com.soccer.ghsvi.jsoccercc.MainActivity">
 
     <ImageView
         android:id="@+id/imageViewLogo"
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="55dp"
-        android:text="RSS Feed"
+        android:text="FIFA News"
         android:background="@drawable/border"
         android:textColor="#37474F"
         tools:layout_editor_absoluteX="142dp"
