@@ -171,6 +171,19 @@ public class OrganizarDataSinglePlayer extends AsyncTask<Void, String, Void> {
 
         for (int i = 0; i < lista.size(); i++)
         {
+            String urlCutout = lista.get(i).getStrCutout();
+
+            if(!urlCutout.contains("https://"))
+            {
+                urlCutout = "https://" + urlCutout;
+            }
+
+            String urlThumb = lista.get(i).getStrThumb();
+
+            if(!urlThumb.contains("https://"))
+            {
+                urlThumb = "https://" + urlThumb;
+            }
 
             if (!lista.get(i).getStrCutout().equals("null") && !lista.get(i).getStrThumb().equals("null"))
             {
@@ -182,7 +195,7 @@ public class OrganizarDataSinglePlayer extends AsyncTask<Void, String, Void> {
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(250, 250);
                 image.setLayoutParams(lp);
                 Glide.with(PesquisaSinglePlayer.getContext())
-                        .load("http://" + lista.get(i).getStrCutout()).override(250, 250)
+                        .load(urlCutout).override(250, 250)
                         .into(image);
                 PesquisaSinglePlayer.getLinearLayout().addView(image);
             }
@@ -196,7 +209,7 @@ public class OrganizarDataSinglePlayer extends AsyncTask<Void, String, Void> {
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(250, 250);
                 image.setLayoutParams(lp);
                 Glide.with(PesquisaSinglePlayer.getContext())
-                        .load("http://" + lista.get(i).getStrCutout()).override(250, 250)
+                        .load(urlCutout).override(250, 250)
                         .into(image);
                 PesquisaSinglePlayer.getLinearLayout().addView(image);
             }
@@ -211,7 +224,7 @@ public class OrganizarDataSinglePlayer extends AsyncTask<Void, String, Void> {
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(250, 250);
                 image.setLayoutParams(lp);
                 Glide.with(PesquisaSinglePlayer.getContext())
-                        .load("http://" + lista.get(i).getStrThumb()).override(250, 250)
+                        .load(urlThumb).override(250, 250)
                         .into(image);
                 PesquisaSinglePlayer.getLinearLayout().addView(image);
             }

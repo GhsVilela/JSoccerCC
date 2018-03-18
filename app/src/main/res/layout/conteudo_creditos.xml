@@ -111,7 +111,7 @@
         android:layout_marginBottom="5dp"
         android:textColor="#37474F"
         android:textSize="20dp"
-        android:text="Major Orienting Professor Rodrigo Grassi:"
+        android:text="Major Orienting Professor Rodrigo Grassi Martins:"
         android:textStyle="bold"
         />
 

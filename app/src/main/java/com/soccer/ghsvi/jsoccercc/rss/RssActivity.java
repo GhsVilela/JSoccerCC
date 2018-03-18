@@ -1,5 +1,6 @@
 package com.soccer.ghsvi.jsoccercc.rss;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
@@ -31,6 +32,7 @@ import java.util.List;
 
 public class RssActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
+    private static Context mContext;
     private Toolbar toolbar;
     private ViewPager viewPager;
     private TabLayout tabLayout;
@@ -45,6 +47,8 @@ public class RssActivity extends AppCompatActivity implements NavigationView.OnN
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rss);
+
+        mContext = getApplicationContext();
 
         Toast.makeText(RssActivity.this, "Swipe down to load the news!!", Toast.LENGTH_LONG).show();
 
@@ -90,6 +94,10 @@ public class RssActivity extends AppCompatActivity implements NavigationView.OnN
             }
         });
 
+    }
+
+    public static Context getContext() {
+        return mContext;
     }
 
     private void setupViewPager(ViewPager viewPager)

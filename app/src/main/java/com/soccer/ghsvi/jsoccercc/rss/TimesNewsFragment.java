@@ -2,6 +2,8 @@ package com.soccer.ghsvi.jsoccercc.rss;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -13,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -63,9 +66,19 @@ public class TimesNewsFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                recyclerAdapter.clear();
-                new TimesNewsFragment.GetNewsFeed().execute();
-                swipeRefreshLayout.setRefreshing(false);
+                int testConnection = checkConnectivity();
+
+                if(testConnection==1)
+                {
+                    recyclerAdapter.clear();
+                    new TimesNewsFragment.GetNewsFeed().execute();
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+                else
+                {
+                    Toast.makeText(RssActivity.getContext(), "You are offline. Check your internet connection!!", Toast.LENGTH_LONG).show();
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
         });
 
@@ -103,7 +116,7 @@ public class TimesNewsFragment extends Fragment {
             else
             {
                 Log.e("OnPostExecute", "ArrayList Is Null");
-                Snackbar.make(getView(), "No connection was made. You may be Offline or the Feed RSS for this team isn't available", Snackbar.LENGTH_INDEFINITE).show();
+                Snackbar.make(getView(), "The RSS Feed provider isn't availabe at this moment, try again later.", Snackbar.LENGTH_INDEFINITE).show();
             }
         }
 
@@ -144,5 +157,23 @@ public class TimesNewsFragment extends Fragment {
 
     public static void setRssURL(String rssURL) {
         TimesNewsFragment.rssURL = rssURL;
+    }
+
+    private int checkConnectivity() {
+        boolean enabled = true;
+        int internet;
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) RssTimesActivity.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+
+        if ((info == null || !info.isConnected() || !info.isAvailable())) {
+            internet = 0;//not connected
+            //Toast.makeText(RssTimesActivity.getContext(), "Please connect to the internet first!!", Toast.LENGTH_LONG).show();
+            enabled = false;
+        } else {
+            internet = 1;//connected
+        }
+
+        return internet;
     }
 }

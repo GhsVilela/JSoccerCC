@@ -3,6 +3,8 @@ package com.soccer.ghsvi.jsoccercc.rss;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -14,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.soccer.ghsvi.jsoccercc.R;
 
@@ -65,9 +68,19 @@ public class WorldCup2022Fragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                recyclerAdapter.clear();
-                new WorldCup2022Fragment.GetNewsFeed().execute();
-                swipeRefreshLayout.setRefreshing(false);
+                int testConnection = checkConnectivity();
+
+                if(testConnection==1)
+                {
+                    recyclerAdapter.clear();
+                    new WorldCup2022Fragment.GetNewsFeed().execute();
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+                else
+                {
+                    Toast.makeText(RssActivity.getContext(), "You are offline. Check your internet connection!!", Toast.LENGTH_LONG).show();
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
         });
 
@@ -105,7 +118,7 @@ public class WorldCup2022Fragment extends Fragment {
             else
             {
                 Log.e("OnPostExecute", "ArrayList Is Null");
-                Snackbar.make(getView(), "No Connection Was Made. Check Your Internet Connection!!", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(getView(), "The RSS Feed provider isn't availabe at this moment, try again later.", Snackbar.LENGTH_LONG).show();
             }
         }
 
@@ -139,6 +152,24 @@ public class WorldCup2022Fragment extends Fragment {
         InputStream inputStream = response.body().byteStream();
 
         return inputStream;
+    }
+
+    private int checkConnectivity() {
+        boolean enabled = true;
+        int internet;
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) RssActivity.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+
+        if ((info == null || !info.isConnected() || !info.isAvailable())) {
+            internet = 0;//not connected
+            //Toast.makeText(RssActivity.getContext(), "Please connect to the internet first!!", Toast.LENGTH_LONG).show();
+            enabled = false;
+        } else {
+            internet = 1;//connected
+        }
+
+        return internet;
     }
 
 }

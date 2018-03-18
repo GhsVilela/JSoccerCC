@@ -187,11 +187,18 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
                 space.setText("\n");
                 PesquisaTimes.getLinearLayout().addView(space);
 
+                String urlImagem = lista.get(i).getStrTeamBadge();
+
+                if(!urlImagem.contains("https://"))
+                {
+                    urlImagem = "https://" + urlImagem;
+                }
+
                 ImageView image = new ImageView(PesquisaTimes.getContext());
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(250, 250);
                 image.setLayoutParams(lp);
                 Glide.with(PesquisaTimes.getContext())
-                        .load("http://" + lista.get(i).getStrTeamBadge()).override(250, 250)
+                        .load(urlImagem).override(250, 250)
                         .into(image);
                 PesquisaTimes.getLinearLayout().addView(image);
             }
