@@ -84,7 +84,7 @@ public class LatestNewsFragment extends Fragment {
         return view;
     }
 
-    private class GetNewsFeed extends AsyncTask<Void, Void, ArrayList<RssDataParser.Item>> {
+    public class GetNewsFeed extends AsyncTask<Void, Void, ArrayList<RssDataParser.Item>> {
 
         @Override
         protected ArrayList<RssDataParser.Item> doInBackground(Void... voids) {

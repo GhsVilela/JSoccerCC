@@ -33,4 +33,7 @@ dependencies {
     implementation files('libs/activation.jar')
     implementation files('libs/additionnal.jar')
     implementation files('libs/mail.jar')
+    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.6.0'
+    androidTestCompile 'com.android.support.test:rules:1.0.1'
+    androidTestCompile 'junit:junit:4.12'
 }

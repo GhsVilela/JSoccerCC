@@ -569,6 +569,7 @@ public class OrganizarDataTimes extends AsyncTask<Void, String, Void> {
                     TimesNewsFragment.setRssURL(lista.get(v.getId()).getStrRSS());
 
                     Intent it = new Intent(PesquisaTimes.getContext(), RssTimesActivity.class);
+                    it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     PesquisaTimes.getContext().startActivity(it);
                 }
             });
